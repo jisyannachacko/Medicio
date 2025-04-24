@@ -1,0 +1,199 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Organ Donors - Hospital Dashboard</title> {# Updated Title #}
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+    <link href="{% static 'hospitalhome/assets/img/favicon.png'%}" rel="icon">
+  <link href="{% static 'hospitalhome/assets/img/apple-touch-icon.png'%}" rel="apple-touch-icon">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+
+    <link href="{% static 'hospitalhome/assets/vendor/animate.css/animate.min.css'%}" rel="stylesheet">
+  <link href="{% static 'hospitalhome/assets/vendor/aos/aos.css'%}" rel="stylesheet">
+  <link href="{% static 'hospitalhome/assets/vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+  <link href="{% static 'hospitalhome/assets/vendor/bootstrap-icons/bootstrap-icons.css'%}" rel="stylesheet">
+  <link href="{% static 'hospitalhome/assets/vendor/boxicons/css/boxicons.min.css'%}" rel="stylesheet">
+  <link href="{% static 'hospitalhome/assets/vendor/glightbox/css/glightbox.min.css'%}" rel="stylesheet">
+  <link href="{% static 'hospitalhome/assets/vendor/swiper/swiper-bundle.min.css'%}" rel="stylesheet">
+
+    <link href="{% static 'hospitalhome/assets/css/style.css'%}" rel="stylesheet">
+
+    {# Custom CSS for clickable rows #}
+    <style>
+        .donor-row-clickable {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex justify-content-between align-items-center">
+
+      <div class="logo">
+        <h1 class="text-light"><span>{{ request.session.id }}</span></h1> {# Assuming request.session.id is the hospital name #}
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="{% url 'hosp_serv' %}">Dashboard</a></li> {# Adjusted link if necessary #}
+          {# Assuming 'blood_details' is the URL name for this view #}
+          <li><a class="active" href="{% url 'blood_details' %}">Organ Donors</a></li> {# Adjusted link and set active #}
+          <li><a href="{% url 'blood_inv' %}">Blood Inventory</a></li> {# Added Blood Inventory link #}
+          <li><a href="{% url 'view_requests' %}">Blood Requests</a></li> {# Added Blood Requests link #}
+          <li><a href="{% url 'logout' %}">LogOut</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>    </div>
+  </header>  <main id="main" style="margin-top: 100px;">
+    <section class="organ-donors"> {# Updated section class #}
+      <div class="container">
+        <h2 class="mb-4">Organ Donors</h2> {# Updated heading #}
+
+        {# Messages (kept from the blood requests template) #}
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {# Organ Donor Table Content #}
+        <div class="table-responsive"> {# Added table-responsive for better mobile view #}
+          <table class="table table-striped table-hover"> {# Added Bootstrap table classes for styling #}
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Blood Type</th>
+                    <th>Organs Donated</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+<tbody>
+    {% for donor in donors %}
+    <tr class="donor-row-clickable">
+        <td>
+            <a href="{% url 'donor_details' donor.id %}" class="text-decoration-none text-dark">
+                {{ donor.First_Name }} {{ donor.Last_Name }}
+            </a>
+        </td>
+        <td>
+            <a href="{% url 'donor_details' donor.id %}" class="text-decoration-none text-dark">
+                {{ donor.Blood_Type }}
+            </a>
+        </td>
+        <td>
+            <a href="{% url 'donor_details' donor.id %}" class="text-decoration-none text-dark">
+                {% for organ in donor.Organs_Donated.all %}
+                    {{ organ.Organ_Name }}{% if not forloop.last %}, {% endif %}
+                {% empty %}
+                    No organs specified
+                {% endfor %}
+            </a>
+        </td>
+        <td>
+            <span class="badge 
+      {% if donor.status == 'pending' %}bg-warning text-dark
+      {% elif donor.status == 'accepted' %}bg-success
+      {% else %}bg-danger{% endif %}">
+      {{ donor.status|title }}
+    </span>
+    {% if donor.status == 'pending' %}
+    <div class="btn-group mt-1">
+      <a href="{% url 'accept_organ_donor' donor.id %}" class="btn btn-success btn-sm">Approve</a>
+      <a href="{% url 'reject_organ_donor' donor.id %}" class="btn btn-danger btn-sm">Reject</a>
+    </div>
+    {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+    
+</tbody>
+          </table>
+        </div>
+        {# End of Organ Donor Table Content #}
+
+      </div>
+    </section>
+  </main>    <footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'hosp_serv' %}">Dashboard</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'blood_inv' %}">Blood Inventory</a></li> {# Adjusted link #}
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'blood_details' %}">Organ Donors</a></li> {# Adjusted link #}
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'view_requests' %}">Blood Requests</a></li> {# Adjusted link #}
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h4>Contact Us</h4>
+            <p>
+              A108 Adam Street <br>
+              New York, NY 535022<br>
+              United States <br><br>
+              <strong>Phone:</strong> +1 5589 55488 55<br>
+              <strong>Email:</strong> info@example.com<br>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Medicio</span></strong>. All Rights Reserved
+      </div>
+    </div>
+  </footer>  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+
+    <script src="{% static 'hospitalhome/assets/vendor/purecounter/purecounter_vanilla.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/aos/aos.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script> {# Bootstrap JS with Popper #}
+  <script src="{% static 'hospitalhome/assets/vendor/glightbox/js/glightbox.min.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/isotope-layout/isotope.pkgd.min.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/swiper/swiper-bundle.min.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/waypoints/noframework.waypoints.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/php-email-form/validate.js'%}"></script>
+
+    <script src="{% static 'hospitalhome/assets/js/main.js'%}"></script>
+
+{# Custom JavaScript for Modal (add just before closing body tag, after Bootstrap JS) #}
+<script>
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simple row click handler (optional)
+            document.querySelectorAll('.donor-row-clickable').forEach(row => {
+                row.addEventListener('click', function(e) {
+                    // Prevent navigation if clicking buttons
+                    if (!e.target.closest('a') && !e.target.closest('button')) {
+                        const link = this.querySelector('a');
+                        if (link) {
+                            window.location.href = link.href;
+                        }
+                    }
+                });
+            });
+        });
+        </script>
+
+{# End Custom JavaScript #}
+
+</body>
+</html>

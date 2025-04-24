@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block title %}Request Details | Organ Donation System{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="page-header">
+    <div class="container">
+        <h1>Request Details</h1>
+        <p class="lead">View information about your organ request</p>
+    </div>
+</div>
+
+<div class="container mb-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0">
+                        Request #{{ organ_request.id }} - {{ organ_request.get_organ_needed_display }}
+                        {% if organ_request.status == 0 %}
+                            <span class="badge bg-warning float-end">Pending Review</span>
+                        {% elif organ_request.status == 1 %}
+                            <span class="badge bg-success float-end">Approved</span>
+                        {% elif organ_request.status == 2 %}
+                            <span class="badge bg-danger float-end">Rejected</span>
+                        {% elif organ_request.status == 3 %}
+                            <span class="badge bg-primary float-end">Matched</span>
+                        {% elif organ_request.status == 4 %}
+                            <span class="badge bg-info float-end">Received</span>
+                        {% endif %}
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <p><strong>Submission Date:</strong> {{ organ_request.created_at|date:"F d, Y" }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Last Updated:</strong> {{ organ_request.updated_at|date:"F d, Y" }}</p>
+                        </div>
+                    </div>
+                    
+                    <h4 class="mb-3">Patient Information</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Full Name:</strong> {{ organ_request.patient_first_name }} {% if organ_request.patient_middle_name %}{{ organ_request.patient_middle_name }}{% endif %} {{ organ_request.patient_last_name }}</p>
+                            <p><strong>Age:</strong> {{ organ_request.age }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Blood Group:</strong> {{ organ_request.blood_group }}</p>
+                            <p>
+                                <strong>Urgency Level:</strong> 
+                                {% if organ_request.urgency_level == 1 %}
+                                    <span class="badge bg-success">Low</span>
+                                {% elif organ_request.urgency_level == 2 %}
+                                    <span class="badge bg-info">Medium</span>
+                                {% elif organ_request.urgency_level == 3 %}
+                                    <span class="badge bg-warning">High</span>
+                                {% elif organ_request.urgency_level == 4 %}
+                                    <span class="badge bg-danger">Critical</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <h4 class="mb-3">Medical Information</h4>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p><strong>Organ Needed:</strong> {{ organ_request.get_organ_needed_display }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Medical Report:</strong> <a href="{{ organ_request.medical_report.url }}" target="_blank">View Medical Report</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="card bg-light mt-2">
+                        <div class="card-body">
+                            <h5 class="card-title">Medical Condition</h5>
+                            <p class="card-text">{{ organ_request.medical_condition }}</p>
+                        </div>
+                    </div>
+                    
+                    {% if organ_request.additional_notes %}
+                    <div class="card bg-light mt-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Additional Notes</h5>
+                            <p class="card-text">{{ organ_request.additional_notes }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <hr>
+                    
+                    <h4 class="mb-3">Hospital Information</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Doctor's Name:</strong> {{ organ_request.doctor_name }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Hospital Name:</strong> {{ organ_request.hospital_name }}</p>
+                        </div>
+                    </div>
+                    <p><strong>Hospital Address:</strong> {{ organ_request.hospital_address }}</p>
+                </div>
+                <div class="card-footer">
+                    {% if organ_request.status == 0 %}
+                        <div class="alert alert-warning">
+                            <p class="mb-0"><strong>Note:</strong> Your request is currently under review. We will notify you once a decision has been made.</p>
+                        </div>
+                    {% elif organ_request.status == 1 %}
+                        <div class="alert alert-success">
+                            <p class="mb-0"><strong>Note:</strong> Your request has been approved. We are actively searching for a matching donor.</p>
+                        </div>
+                    {% elif organ_request.status == 2 %}
+                        <div class="alert alert-danger">
+                            <p class="mb-0"><strong>Note:</strong> Your request has been rejected. Please contact our support team for more information.</p>
+                        </div>
+                    {% elif organ_request.status == 3 %}
+                        <div class="alert alert-primary">
+                            <p class="mb-0"><strong>Note:</strong> We've found a potential match for your request. Please check your matches for more details.</p>
+                        </div>
+                    {% elif organ_request.status == 4 %}
+                        <div class="alert alert-info">
+                            <p class="mb-0"><strong>Note:</strong> Congratulations! The organ transplant has been completed successfully.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="text-center mt-3">
+                <a href="{% url 'user_dashboard' %}" class="btn btn-outline-secondary">Back to Dashboard</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,201 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Blood Donors - Hospital Dashboard</title> {# Updated Title #}
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+    <link href="{% static 'hospitalhome/assets/img/favicon.png'%}" rel="icon">
+  <link href="{% static 'hospitalhome/assets/img/apple-touch-icon.png'%}" rel="apple-touch-icon">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+
+    <link href="{% static 'hospitalhome/assets/vendor/animate.css/animate.min.css'%}" rel="stylesheet">
+  <link href="{% static 'hospitalhome/assets/vendor/aos/aos.css'%}" rel="stylesheet">
+  <link href="{% static 'hospitalhome/assets/vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+  <link href="{% static 'hospitalhome/assets/vendor/bootstrap-icons/bootstrap-icons.css'%}" rel="stylesheet">
+  <link href="{% static 'hospitalhome/assets/vendor/boxicons/css/boxicons.min.css'%}" rel="stylesheet">
+  <link href="{% static 'hospitalhome/assets/vendor/glightbox/css/glightbox.min.css'%}" rel="stylesheet">
+  <link href="{% static 'hospitalhome/assets/vendor/swiper/swiper-bundle.min.css'%}" rel="stylesheet">
+
+    <link href="{% static 'hospitalhome/assets/css/style.css'%}" rel="stylesheet">
+
+    {# Added specific styles for the accept/reject links if you want them to look like buttons #}
+    <style>
+        .action-links a {
+            display: inline-block;
+            padding: 5px 10px;
+            margin-bottom: 5px; /* Add some space between links */
+            text-align: center;
+            text-decoration: none;
+            border-radius: 4px; /* Slightly rounded corners */
+            color: white; /* White text */
+            font-size: 0.9rem; /* Slightly smaller font */
+        }
+
+        .action-links a.accept-link {
+            background-color: #28a745; /* Green for Accept */
+        }
+
+         .action-links a.accept-link:hover,
+         .action-links a.accept-link:active {
+             background-color: #218838; /* Darker green on hover */
+         }
+
+
+        .action-links a.reject-link {
+            background-color: #dc3545; /* Red for Reject */
+        }
+
+         .action-links a.reject-link:hover,
+         .action-links a.reject-link:active {
+             background-color: #c82333; /* Darker red on hover */
+         }
+    </style>
+</head>
+
+<body>
+
+    <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex justify-content-between align-items-center">
+
+      <div class="logo">
+        <h1 class="text-light"><span>{{ request.session.id }}</span></h1> {# Assuming request.session.id is the hospital name #}
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="{% url 'hosp_serv' %}">Dashboard</a></li> {# Adjusted link if necessary #}
+          {# Assuming 'blood_details' is the URL name for this view #}
+          <li><a class="active" href="{% url 'blood_details' %}">Blood Donors</a></li> {# Set Blood Donors as active #}
+          <li><a href="{% url 'blood_inv' %}">Blood Inventory</a></li> {# Added Blood Inventory link #}
+          <li><a href="{% url 'view_requests' %}">Blood Requests</a></li> {# Added Blood Requests link #}
+          <li><a href="{% url 'logout' %}">LogOut</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav>    </div>
+  </header>  <main id="main" style="margin-top: 100px;">
+    <section class="blood-donors"> {# Updated section class #}
+      <div class="container">
+
+        {# Start of Blood Donor Table Content #}
+        {# Wrapped table in form as in the original blood donor snippet #}
+        <form method="POST" action="{% url 'blood_details'%}">{% csrf_token %}
+            <h2 class="text-center mb-4">Details of Blood Donors</h2> {# Updated heading class and tag #}
+            <div class="table-wrap"> {# Kept table-wrap class #}
+                <table class="table table-striped table-hover table-responsive"> {# Added Bootstrap table classes #}
+                <thead class="thead-primary"> {# Kept original thead class #}
+                    <tr>
+                        <th>First Name</th>
+                        <th>Age</th>
+                        <th>Blood Type</th>
+                        <th>Date of Birth</th>
+                        <th>Gender</th>
+                        <th>District</th>
+                        <th>Weight</th>
+                        <th>Diabetic</th>
+                        <th>HIV</th>
+                        <th>Medicine Name</th>
+                        <th>Disease Name</th>
+                        <th>Surgery Name</th>
+                        <th>Donated Previous Date</th>
+                        <th>Actions</th> {# Changed 'Select' to 'Actions' for clarity #}
+
+                    </tr>
+                        </thead>
+                        <tbody>
+                        {% for x in register %}
+                          <tr>
+                            <th scope="row" class="scope" >{{x.First_Name}}</th>
+                            <td>{{x.Age}}</td>
+                            <td>{{x.Blood_Type}}</td>
+                            <td>{{x.Date_Of_Birth}}</td>
+                            <td>{{x.Gender}}</td>
+                            <td>{{x.District}}</td>
+                            <td>{{x.Weight}}</td>
+                            <td>{{x.Diabetic}}</td>
+                            <td>{{x.HIV}}</td>
+                            <td>{{x.Medicine_Name}}</td>
+                            <td>{{x.Disease_Name}}</td>
+                            <td>{{x.Surgery_Name}}</td>
+                            <td>{{x.Donated_Date}}</td>
+                            <td class="action-links"> {# Added class for styling #}
+                                {# Hidden input within the form, value submitted if the form is submitted #}
+                                {# This input might not be needed if accept/reject are separate links, not part of form submission for the whole table #}
+                                <input type="hidden" value="{{x.id}}" name="donor_id_{{ forloop.counter }}"> {# Unique name for each ID #}
+                                {# Links - Update href to correct Django URLs with donor ID parameter if needed #}
+                                <a href="/accept/{{ x.id }}" class="accept-link">Accept</a> {# Example: /accept/123 #}
+                                <br>
+                                <a href="/reject/{{ x.id }}" class="reject-link">Reject</a> {# Example: /reject/123 #}
+                            </td>
+
+                          </tr>
+{%empty%} {# Added empty state for no donors #}
+<tr>
+    <td colspan="14" class="text-center">No blood donors found.</td> {# Adjust colspan based on the number of columns #}
+</tr>
+{%endfor%}
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+            </div>
+        </form>
+        {# End of Blood Donor Table Content #}
+
+      </div>
+    </section>
+  </main>    <footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'hosp_serv' %}">Dashboard</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'blood_inv' %}">Blood Inventory</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'blood_details' %}">Blood Donors</a></li> {# Link to this page #}
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'view_requests' %}">Blood Requests</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h4>Contact Us</h4>
+            <p>
+              A108 Adam Street <br>
+              New York, NY 535022<br>
+              United States <br><br>
+              <strong>Phone:</strong> +1 5589 55488 55<br>
+              <strong>Email:</strong> info@example.com<br>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Medicio</span></strong>. All Rights Reserved
+      </div>
+    </div>
+  </footer>  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <script src="{% static 'hospitalhome/assets/vendor/purecounter/purecounter_vanilla.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/aos/aos.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/glightbox/js/glightbox.min.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/isotope-layout/isotope.pkgd.min.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/swiper/swiper-bundle.min.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/waypoints/noframework.waypoints.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/php-email-form/validate.js'%}"></script>
+
+    <script src="{% static 'hospitalhome/assets/js/main.js'%}"></script>
+
+   
+</body>
+</html>

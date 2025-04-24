@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Medicio - Login</title> {# Updated Title #}
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <link href="{% static 'hospitalhome/assets/img/favicon.png'%}" rel="icon">
+    <link href="{% static 'hospitalhome/assets/img/apple-touch-icon.png'%}" rel="apple-touch-icon">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+
+    <link href="{% static 'hospitalhome/assets/vendor/animate.css/animate.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/aos/aos.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/bootstrap-icons/bootstrap-icons.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/boxicons/css/boxicons.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/glightbox/css/glightbox.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/swiper/swiper-bundle.min.css'%}" rel="stylesheet">
+
+    <link href="{% static 'hospitalhome/assets/css/style.css'%}" rel="stylesheet">
+
+    {# Removed original inline style block #}
+
+    <style>
+        /* Custom style to center the login/signup form vertically */
+        .form-center-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 160px); /* Adjust based on header/footer height if needed */
+            padding: 20px 0; /* Add some padding */
+        }
+        /* Limit form width */
+        .form-box {
+            max-width: 500px;
+            width: 100%; /* Take full width up to max-width */
+            padding: 30px;
+            background-color: #fff; /* White background for the form box */
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+    </style>
+
+</head>
+
+<body>
+
+    {# Simplified header for login/signup pages #}
+    <header id="header" class="fixed-top d-flex align-items-center">
+        <div class="container d-flex justify-content-between align-items-center">
+
+            <div class="logo">
+                {# Site title "Medicio" #}
+                <h1 class="text-light"><a href="/"><span>Medicio</span></a></h1>
+            </div>
+
+            {# Optional: Add a simple link back home or other relevant link #}
+            {# <nav id="navbar" class="navbar">
+                 <ul>
+                     <li><a class="nav-link" href="{% url 'organhome' %}">Home</a></li>
+                 </ul>
+            </nav> #}
+
+        </div>
+    </header><main id="main" class="form-center-container" style="margin-top: 80px;"> {# Adjusted margin-top #}
+        <div class="form-box"> {# Added form box wrapper #}
+            {# Content from your original HTML #}
+
+            {# Applied Bootstrap heading and margin classes #}
+            <h1 class="text-center mb-4">Login to Medicio</h1>
+
+            <form method="post">
+                {% csrf_token %}
+
+                {# Applied Bootstrap form group and input classes #}
+                <div class="mb-3"> {# Replaces .form-group #}
+                    <label for="email" class="form-label">Email</label> {# Added .form-label #}
+                    <input type="email" id="email" name="email" class="form-control" required> {# Added .form-control #}
+                </div>
+
+                {# Applied Bootstrap form group and input classes #}
+                <div class="mb-3"> {# Replaces .form-group #}
+                    <label for="pass" class="form-label">Password</label> {# Added .form-label #}
+                    <input type="password" id="pass" name="pass" class="form-control" required> {# Added .form-control #}
+                </div>
+
+                {# Applied Bootstrap button and margin classes #}
+                <div class="d-grid gap-2 mb-3"> {# d-grid for full-width button #}
+                    <button type="submit" class="btn btn-primary">Login</button> {# Applied Bootstrap button classes #}
+                </div>
+
+            </form>
+
+            {# Applied Bootstrap margin and text classes #}
+            <p class="text-center mt-3">Don't have an account? <a href="{% url 'organ_signup' %}">Sign up</a></p>
+            {# Applied Bootstrap margin and text classes #}
+            <p class="text-center"><a href="{% url 'organhome' %}">Back to Home</a></p>
+
+            {# End of content from your original HTML #}
+        </div>
+    </main>
+    <footer id="footer"> {# Removed data-aos attributes for simplicity on a form page #}
+         <div class="container">
+             <div class="copyright">
+                 &copy; Copyright <strong><span>Medicio</span></strong>. All Rights Reserved
+             </div>
+         </div>
+     </footer>
+     {# End Simplified Footer #}
+
+
+    {# Vendor JS Files (Needed for Bootstrap and potentially other theme features) #}
+    <script src="{% static 'hospitalhome/assets/vendor/purecounter/purecounter_vanilla.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/aos/aos.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script> {# Bootstrap JS with Popper #}
+    <script src="{% static 'hospitalhome/assets/vendor/glightbox/js/glightbox.min.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/isotope-layout/isotope.pkgd.min.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/swiper/swiper-bundle.min.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/waypoints/noframework.waypoints.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/php-email-form/validate.js'%}"></script>
+
+    <script src="{% static 'hospitalhome/assets/js/main.js'%}"></script>
+
+
+</body>
+
+</html>

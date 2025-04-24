@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block title %}Donation Details | Organ Donation System{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="page-header">
+    <div class="container">
+        <h1>Donation Details</h1>
+        <p class="lead">View information about your organ donation</p>
+    </div>
+</div>
+
+<div class="container mb-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h3 class="card-title mb-0">
+                        Donation #{{ donation.id }} - {{ donation.get_organ_display }}
+                        {% if donation.status == 0 %}
+                            <span class="badge bg-warning float-end">Pending Review</span>
+                        {% elif donation.status == 1 %}
+                            <span class="badge bg-success float-end">Approved</span>
+                        {% elif donation.status == 2 %}
+                            <span class="badge bg-danger float-end">Rejected</span>
+                        {% elif donation.status == 3 %}
+                            <span class="badge bg-primary float-end">Matched</span>
+                        {% elif donation.status == 4 %}
+                            <span class="badge bg-info float-end">Donated</span>
+                        {% endif %}
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <p><strong>Submission Date:</strong> {{ donation.created_at|date:"F d, Y" }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Last Updated:</strong> {{ donation.updated_at|date:"F d, Y" }}</p>
+                        </div>
+                    </div>
+                    
+                    <h4 class="mb-3">Personal Information</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Full Name:</strong> {{ donation.first_name }} {% if donation.middle_name %}{{ donation.middle_name }}{% endif %} {{ donation.last_name }}</p>
+                            <p><strong>Father's Name:</strong> {{ donation.father_name }}</p>
+                            <p><strong>Mother's Name:</strong> {{ donation.mother_name }}</p>
+                            <p><strong>Age:</strong> {{ donation.age }}</p>
+                            <p><strong>Gender:</strong> {{ donation.get_gender_display }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Blood Group:</strong> {{ donation.blood_group }}</p>
+                            <p><strong>Email:</strong> {{ donation.email }}</p>
+                            <p><strong>Phone:</strong> {{ donation.phone_number }}</p>
+                            <p><strong>Occupation:</strong> {{ donation.occupation }}</p>
+                            <p><strong>Date of Birth:</strong> {{ donation.date_of_birth|date:"F d, Y" }}</p>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <h4 class="mb-3">Address</h4>
+                    <p>{{ donation.address }}</p>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p><strong>City:</strong> {{ donation.city }}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p><strong>District:</strong> {{ donation.district }}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p><strong>State:</strong> {{ donation.state }}</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p><strong>Pincode:</strong> {{ donation.pincode }}</p>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <h4 class="mb-3">Donation Details</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Organ:</strong> {{ donation.get_organ_display }}</p>
+                            <p><strong>Live Donor:</strong> {% if donation.is_live_donor %}Yes{% else %}No{% endif %}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>ID Card Uploaded:</strong> <a href="{{ donation.id_card.url }}" target="_blank">View ID Card</a></p>
+                        </div>
+                    </div>
+                    
+                    {% if donation.medical_history %}
+                    <div class="card bg-light mt-2">
+                        <div class="card-body">
+                            <h5 class="card-title">Medical History</h5>
+                            <p class="card-text">{{ donation.medical_history }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <hr>
+                    
+                    <h4 class="mb-3">Emergency Contact</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Name:</strong> {{ donation.emergency_contact_name }}</p>
+                            <p><strong>Phone:</strong> {{ donation.emergency_contact_phone }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Address:</strong> {{ donation.emergency_contact_address }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    {% if donation.status == 0 %}
+                        <div class="alert alert-warning">
+                            <p class="mb-0"><strong>Note:</strong> Your donation application is currently under review. We will notify you once a decision has been made.</p>
+                        </div>
+                    {% elif donation.status == 1 %}
+                        <div class="alert alert-success">
+                            <p class="mb-0"><strong>Note:</strong> Your donation application has been approved. We will contact you when a potential match is found.</p>
+                        </div>
+                    {% elif donation.status == 2 %}
+                        <div class="alert alert-danger">
+                            <p class="mb-0"><strong>Note:</strong> Your donation application has been rejected. Please contact our support team for more information.</p>
+                        </div>
+                    {% elif donation.status == 3 %}
+                        <div class="alert alert-primary">
+                            <p class="mb-0"><strong>Note:</strong> Your donation has been matched with a recipient. Please check your matches for more details.</p>
+                        </div>
+                    {% elif donation.status == 4 %}
+                        <div class="alert alert-info">
+                            <p class="mb-0"><strong>Note:</strong> Thank you for your donation. Your generosity has helped save a life.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="text-center mt-3">
+                <a href="{% url 'user_dashboard' %}" class="btn btn-outline-secondary">Back to Dashboard</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

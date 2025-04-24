@@ -1,0 +1,690 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Medicio Bootstrap Template - Index</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'bloodhome/assets/img/favicon.png'%}" rel="icon">
+  <link href="{% static 'bloodhome/assets/img/apple-touch-icon.png'%}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'bloodhome/assets/vendor/fontawesome-free/css/all.min.css'%}" rel="stylesheet">
+  <link href="{% static 'bloodhome/assets/vendor/animate.css/animate.min.css'%}" rel="stylesheet">
+  <link href="{% static 'bloodhome/assets/vendor/aos/aos.css'%}" rel="stylesheet">
+  <link href="{% static 'bloodhome/assets/vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+  <link href="{% static 'bloodhome/assets/vendor/bootstrap-icons/bootstrap-icons.css'%}" rel="stylesheet">
+  <link href="{% static 'bloodhome/assets/vendor/boxicons/css/boxicons.min.css'%}" rel="stylesheet">
+  <link href="{% static 'bloodhome/assets/vendor/glightbox/css/glightbox.min.css'%}" rel="stylesheet">
+  <link href="{% static 'bloodhome/assets/vendor/swiper/swiper-bundle.min.css'%}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'bloodhome/assets/css/style.css'%}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Medicio - v4.9.0
+  * Template URL: https://bootstrapmade.com/medicio-free-bootstrap-theme/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <!-- ======= Top Bar ======= -->
+  <div id="topbar" class="d-flex align-items-center fixed-top">
+    <div class="container d-flex align-items-center justify-content-center justify-content-md-between">
+
+      <div class="d-flex align-items-center">
+        <i class="bi bi-phone"></i> Call us now +91 42 555 368 96
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+
+      <a href="{% url 'medicio'%}" class="logo me-auto"><img src="{% static 'bloodhome/assets/img/logo.png'%}" alt=""></a>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <h1 class="logo me-auto"><a href="index.html">Medicio</a></h1> -->
+
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          <li><a class="nav-link scrollto " href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="#about">About Us</a></li>
+<!--          <li class="dropdown"><a href="#"><span>Search</span> <i class="bi bi-chevron-down"></i></a>-->
+<!--            <ul>-->
+<!--              <li><a href="#">Hospital</a></li>-->
+<!--              <li><a href="#">Blood Bank</a></li>-->
+<!--            </ul>-->
+<!--          </li>-->
+          <li><a class="nav-link scrollto" href="#contact">Contact Us</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+      <a href="{% url 'donate'%}" class="appointment-btn scrollto"><span class="d-none d-md-inline">WANT TO DONATE BLOOD</span> </a>
+        <a href="{% url 'search'%}" class="appointment-btn scrollto"><span class="d-none d-md-inline">LOOKING FOR BLOOD</span> </a>
+       <a href="{% url 'viewresult'%}" class="appointment-btn scrollto"><span class="d-none d-md-inline">Result</span> </a>
+       <nav id="navbar" class="navbar order-last order-lg-0">
+         &nbsp;
+       <ul>
+         <li> &nbsp;HELLO, {{id}}</li>
+      <li><a class="nav-link scrollto" href="{% url 'logout' %}">LOGOUT</a></li>
+       </ul>
+          </nav>
+    </div>
+
+  </header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero">
+    <div id="heroCarousel" data-bs-interval="5000" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+      <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
+
+      <div class="carousel-inner" role="listbox">
+
+        <!-- Slide 1 -->
+        <div class="carousel-item active" style="background-image: url({% static 'bloodhome/assets/img/slide/o1.jpg'%})">
+          <div class="container">
+            <h2>Donate Blood <span>Save Life</span></h2>
+            <p>Give the gift of life to others and save life.
+
+              </p>
+
+            <!--<a href="#about" class="btn-get-started scrollto">DONATE BLOOD</a>-->
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="carousel-item" style="background-image: url({% static 'bloodhome/assets/img/slide/y1.jpg'%})">
+          <div class="container">
+            <h2><b>Let's create blood relation!</b></h2>
+            <p>Donate blood Let <b>HUMANITY</b>  thrive.Blood donation is essential to ensuring community health.</p>
+           <!-- <a href="#about" class="btn-get-started scrollto">DONATE BLOOD</a>-->
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="carousel-item" style="background-image: url({% static 'bloodhome/assets/img/slide/n1.jpg'%})">
+
+
+      </div>
+
+      <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+      </a>
+
+      <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
+        <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+      </a>
+
+    </div>
+      </div>
+  </section><!-- End Hero -->
+
+  <main id="main">
+
+    <!-- ======= Featured Services Section ======= -->
+    <section id="featured-services" class="featured-services">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+            <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
+              <div class="icon"><i class="fas fa-heartbeat"></i></div>
+              <h4 class="title"><a href="">Benefits of blood donation</a></h4>
+              <p class="description">Improves overall cardiovascular health.</p>
+                <p class="description">Reduces the chance of heart attacks.</p>
+                <p class="description">Lowers the risk of stroke.</p>
+                <p class="description">Enhances the production of new blood cells.</p>
+                <p class="description">Lowers risk of cancer.</p>
+
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+            <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
+              <div class="icon"><i class="fas fa-pills"></i></div>
+              <h4 class="title"><a href="">Tips to follow after blood donation</a></h4>
+              <p class="description">Avoid driving</p>
+                <p class="description">Stay hydrated</p>
+                <p class="description">Avoid intake of nicotine</p>
+                <p class="description">keep lying atleast 10 min</p>
+                <p class="description">Avoid strenuous physical activites</p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+            <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
+              <div class="icon"><i class="fas fa-thermometer"></i></div>
+              <h4 class="title"><a href="">Tips to follow during blood donation</a></h4>
+              <p class="description">RELAX!</p>
+                 <p class="description">Assist them in finding good vein</p>
+                 <p class="description">Wear a shirt with lose fitted sleeves</p>
+                 <p class="description">Take a time to enjoy a drink or snack</p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+            <div class="icon-box" data-aos="fade-up" data-aos-delay="400">
+              <div class="icon"><i class="fas fa-dna"></i></div>
+              <h4 class="title"><a href="">Tips to follow before blood donation</a></h4>
+              <p class="description">Sleep Well</p>
+                <p class="description">Eat Good Food</p>
+                <p class="description">Avoid Alcohol</p>
+                <p class="description">Avoid smoking</p>
+
+              <p class="description">Give</p></div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Featured Services Section -->
+
+    <!-- ======= Cta Section ======= -->
+    <section id="cta" class="cta">
+      <div class="container" data-aos="zoom-in">
+
+        <!--<div class="text-center">
+          <h3>In an emergency? Need help now?</h3>
+          <p> </p>
+          <a class="cta-btn scrollto" href="#appointment">Want blood to donate</a>
+            <a class="cta-btn scrollto" href="#appointment">Looking for a blood</a>
+        </div>-->
+
+      </div>
+    </section><!-- End Cta Section -->
+
+    <!-- ======= About Us Section ======= -->
+    <section id="about" class="about">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>About Us</h2>
+          <p></p>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6" data-aos="fade-right">
+            <img src="{% static 'bloodhome/assets/img/a1.jpg'%}" class="img-fluid" alt="">
+          </div>
+          <div class="col-lg-6 pt-4 pt-lg-0 content" data-aos="fade-left">
+            <p>Blood bank is a place where blood bag that is collected from blood donation events is stored in one place. The term "blood bank" refers to a division of a hospital laboratory where the storage of blood product occurs and where proper testing is performed to reduce the risk of transfusion related events. The process of managing the blood bag that is received from the blood donation events needs a proper and systematic management. The biood bag must be handied with care and treated thoroughly as it is related to someone's life. The development of Web-based Blood Bank And Donation Management System (BBDMS) is proposed to provide a management functional to the blood bank in order to handle the blood bag and to make entries of the individuals who want to donate blood and who are in need.</p>
+
+
+
+          </div>
+
+
+      </div>
+        </div>
+    </section><!-- End About Us Section -->
+
+    <!-- ======= Counts Section ======= -->
+    <section id="counts" class="counts">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row no-gutters">
+
+          <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
+            <div class="count-box">
+              <i class="fas fa-user-md"></i>
+              <span data-purecounter-start="0" data-purecounter-end="85" data-purecounter-duration="1" class="purecounter"></span>
+
+              <p><strong>Hospitals</strong> </p>
+
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
+            <div class="count-box">
+              <i class="far fa-hospital"></i>
+              <span data-purecounter-start="0" data-purecounter-end="26" data-purecounter-duration="1" class="purecounter"></span>
+              <p><strong>Blood Banks</strong></p>
+
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
+            <div class="count-box">
+              <i class="fas fa-flask"></i>
+              <span data-purecounter-start="0" data-purecounter-end="14" data-purecounter-duration="1" class="purecounter"></span>
+              <p><strong>Donors</strong> </p>
+
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
+            <div class="count-box">
+              <i class="fas fa-award"></i>
+              <span data-purecounter-start="0" data-purecounter-end="150" data-purecounter-duration="1" class="purecounter"></span>
+              <p><strong>Recipient</strong></p>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Counts Section -->
+
+    <!-- ======= Features Section ======= -->
+    <section id="features" class="features">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+          <div class="col-lg-6 order-2 order-lg-1" data-aos="fade-right">
+            <div class="icon-box mt-5 mt-lg-0">
+              <i class="bx bx-receipt"></i>
+              <h4>Be a Donor</h4>
+              <p>Blood donation costs you nothing, but it can man to someone in need.DOnate blood today so that no one ever has to suffer from a lack of blood.</p>
+            </div>
+            <div class="icon-box mt-5">
+              <i class="bx bx-cube-alt"></i>
+              <h4>Blood Transfusion</h4>
+              <p>It is important to carefully match the donor and recipient blood types.If the donor's blood cells have antigen that are different from those of the recipient, antibodies in the recipient's blood recognize the donor blood as foreign.This triggers an immune response resulting in blood clotting.</p>
+           </div>
+
+
+          </div>
+          <div class="image col-lg-6 order-1 order-lg-2" style='background-image: url("{% static 'bloodhome/assets/img/features1.jpg'%}");' data-aos="zoom-in"></div>
+        </div>
+
+      </div>
+    </section><!-- End Features Section -->
+
+
+
+      <!-- ======= Testimonials Section ======= -->
+    <section id="testimonials" class="testimonials">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Reviews</h2>
+                  </div>
+
+        <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+          <div class="swiper-wrapper">
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  Great place to look for blood in emergency
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+                <img src="{% static 'bloodhome/assets/img/testimonials/testimonials-1.jpg'%}" class="testimonial-img" alt="">
+                <h3>Saul Goodman</h3>
+                <h4> &amp; Sales man</h4>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  I had an amazing experience with B org
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+                <img src="{% static 'bloodhome/assets/img/testimonials/testimonials-2.jpg'%}" class="testimonial-img" alt="">
+                <h3>Sara Wilsson</h3>
+                <h4>Designer</h4>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  One of the best sites for Blood donation.
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+                <img src="{% static 'bloodhome/assets/img/testimonials/testimonials-3.jpg'%}" class="testimonial-img" alt="">
+                <h3>Jena Karlis</h3>
+                <h4>Store Owner</h4>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  I couldn't receive the blood on time. So i had to contact another hospital.
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+                <img src="{% static 'bloodhome/assets/img/testimonials/testimonials-4.jpg'%}" class="testimonial-img" alt="">
+                <h3>Matt Brandon</h3>
+                <h4>Freelancer</h4>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  Great Servies, we can find blood easily.
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+                <img src="{% static 'bloodhome/assets/img/testimonials/testimonials-5.jpg'%}" class="testimonial-img" alt="">
+                <h3>John Larson</h3>
+                <h4>Entrepreneur</h4>
+              </div>
+            </div><!-- End testimonial item -->
+
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+      </div>
+    </section><!-- End Testimonials Section -->
+
+
+    <!-- ======= Gallery Section ======= -->
+    <section id="gallery" class="gallery">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Gallery</h2>
+
+        </div>
+
+        <div class="gallery-slider swiper">
+          <div class="swiper-wrapper align-items-center">
+            <div class="swiper-slide"><a class="gallery-lightbox" href="{% static 'bloodhome/assets/img/gallery/gallery-1.jpg'%}"><img src="{% static 'bloodhome/assets/img/gallery/a1.jpg'%}" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="gallery-lightbox" href="{% static 'bloodhome/assets/img/gallery/a3.jpeg'%}"><img src="{% static 'bloodhome/assets/img/gallery/gallery-2.jpg'%}" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="gallery-lightbox" href="{% static 'bloodhome/assets/img/gallery/gallery-3.jpg'%}"><img src="{% static 'bloodhome/assets/img/gallery/a4.jpeg'%}" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="gallery-lightbox" href="{% static 'bloodhome/assets/img/gallery/a5.jpg'%}"><img src="{% static 'bloodhome/assets/img/gallery/gallery-4.jpg'%}" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="gallery-lightbox" href="{% static 'bloodhome/assets/img/gallery/gallery-5.jpg'%}"><img src="{% static 'bloodhome/assets/img/gallery/j2.jpg'%}" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="gallery-lightbox" href="{% static 'bloodhome/assets/img/gallery/k1.jpg'%}"><img src="{% static 'bloodhome/assets/img/gallery/gallery-6.jpg'%}" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="gallery-lightbox" href="{% static 'bloodhome/assets/img/gallery/n1.jpg'%}"><img src="{% static 'bloodhome/assets/img/gallery/gallery-7.jpg'%}" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="gallery-lightbox" href="{% static 'bloodhome/assets/img/gallery/m1.jpg'%}"><img src="{% static 'bloodhome/assets/img/gallery/gallery-8.jpg'%}" class="img-fluid" alt=""></a></div>
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+      </div>
+    </section>--><!-- End Gallery Section -->
+
+
+
+    <!-- ======= Frequently Asked Questioins Section ======= -->
+    <section id="faq" class="faq section-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Frequently Asked Questioins</h2>
+          <p></p>
+        </div>
+
+        <ul class="faq-list">
+
+          <li>
+            <div data-bs-toggle="collapse" class="collapsed question" href="#faq1">Who may donate blood? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+            <div id="faq1" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                Donors should be between the ages of 18 and 65, weigh at least 50 kg and not have donated blood within the previous 12 weeks (for males). The criteria, which are applied before a person can be accepted as a blood donor, are very strict. Not everyone can be a blood donor. This is designed to protect the health of the donor as well as the health of the patient who receives the blood.
+
+For example, people who have certain medical conditions or who are taking certain types of medication are not permitted to donate blood. People whose sexual behaviour places them at increased risk of transmitting infections through transfusion are also not permitted to donate. If any of the deferral criteria apply to you, or if for any reason you think that your blood may be unsafe to transfuse to a patient, you are advised not to donate.
+
+The mission of the blood transfusion service is to provide all patients with sufficient, safe, quality blood and blood products. If you are in any doubt about whether you should donate blood, please discuss it with a staff member. We know it can be disappointing if you are not able to give blood. However, we hope you will understand that our overriding responsibility is to ensure the safety of donors and the safety of the blood for patients.
+              </p>
+            </div>
+          </li>
+
+          <li>
+            <div data-bs-toggle="collapse" href="#faq2" class="collapsed question">What do I get in return for my blood donation?<i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+            <div id="faq2" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                Blood is donated voluntarily, freely and without payment or reward of any kind. Blood must only be donated in the spirit of altruism for patients who need blood or blood products as part of their medical treatment. Blood is donated as an act of goodwill towards a fellow human being and nothing should be expected in return for giving this gift of life.
+
+What you do get in return is a physical and emotional sense of well-being and the knowledge that you have helped to save someone's life. We all hope that someone will do the same for us when we need a blood transfusion.
+              </p>
+            </div>
+          </li>
+
+          <li>
+            <div data-bs-toggle="collapse" href="#faq3" class="collapsed question">What is the procedure when I donate blood? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+            <div id="faq3" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                Firstly, you will be asked to provide personal details such as your name, address, age, weight, ID number and/or date of birth. A medical history is taken by means of a written questionnaire.
+
+These questions are designed to ascertain that it is medically safe for you to donate blood and that the recipient of your blood will not be harmed in any way. In addition, very personal questions relating to your mode of life and sexual behaviour are asked to ascertain that you are not at increased risk of potentially transmitting infection through transfusion. People are asked to exclude themselves from blood donation if any of the deferral criteria apply to them.
+
+A finger prick test is performed in order to ascertain if your haemoglobin level is within a safe range for donation purposes. Potential donors will be permitted to donate only if this measurement is within the defined, acceptable range. If everything is in order you will proceed to donate your blood.
+              </p>
+            </div>
+          </li>
+
+          <li>
+            <div data-bs-toggle="collapse" href="#faq4" class="collapsed question">How long does the donation take? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+            <div id="faq4" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                The procedure, which is performed by a trained, skilled health-care professional, takes approximately 30 minutes. You will give about 450 ml of blood, after which you will be advised to remain on the donor bed for a few minutes longer and then to take some refreshments. Plan to spend about half an hour to an hour at the blood donor centre for the entire process, depending on the size of the centre and the number of donors.
+              </p>
+            </div>
+          </li>
+
+          <li>
+            <div data-bs-toggle="collapse" href="#faq5" class="collapsed question">Is it possible to get HIV/AIDS from donating blood? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+            <div id="faq5" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                No. You cannot get AIDS or any other infectious disease by giving blood. The materials used for your blood donation, including the needle, blood collection bag, tubes and finger prick needle are new, sterile and disposable. These are used only once for your blood donation and then destroyed after use.
+              </p>
+            </div>
+          </li>
+
+          <li>
+            <div data-bs-toggle="collapse" href="#faq6" class="collapsed question">How often can I donate blood?<i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+            <div id="faq6" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                You may donate either whole blood or a specific blood component such as blood platelets. Each type of donation requires a certain waiting period before you can give again. After a whole blood donation, a person must wait at least 56 days before donating again.
+
+The minimum interval between whole blood donations is 12 weeks for men and 16 weeks for women. Platelet and plasma donors are able to donate more frequently.
+              </p>
+            </div>
+          </li>
+
+        </ul>
+
+      </div>
+    </section><!-- End Frequently Asked Questioins Section -->
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Contact</h2>
+
+        </div>
+
+      </div>
+
+      <div>
+        <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" allowfullscreen></iframe>
+      </div>
+
+      <div class="container">
+
+        <div class="row mt-5">
+
+          <div class="col-lg-6">
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="info-box">
+                  <i class="bx bx-map"></i>
+                  <h3>Our Address</h3>
+                  <p>Medicio Donation,6th street road, Trivandrum</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-box mt-4">
+                  <i class="bx bx-envelope"></i>
+                  <h3>Email Us</h3>
+                  <p>Borgdonation@gmail.com<br></p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-box mt-4">
+                  <i class="bx bx-phone-call"></i>
+                  <h3>Call Us</h3>
+                  <p>+91 45 897 245 36<br>+91 79 468 247 36</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Change the contact form section in blood_login.html -->
+<div class="col-lg-6">
+  {% if messages %}
+<div class="alert alert-dismissible fade show" role="alert">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+  <form method="post" action="{% url 'submit_feedback' %}" role="form" class="php-email-form">
+      {% csrf_token %}
+      <div class="row">
+          <div class="col-md-6 form-group">
+              <input type="text" name="name" class="form-control" id="name" 
+                     placeholder="Your Name" required>
+          </div>
+          <div class="col-md-6 form-group mt-3 mt-md-0">
+              <input type="email" class="form-control" name="email" 
+                     id="email" placeholder="Your Email" required>
+          </div>
+      </div>
+      <div class="form-group mt-3">
+          <input type="text" class="form-control" name="subject" 
+                 id="subject" placeholder="Subject" required>
+      </div>
+      <div class="form-group mt-3">
+          <textarea class="form-control" name="message" rows="7" 
+                    placeholder="Message" required></textarea>
+      </div>
+      <div class="my-3">
+          <div class="error-message">{% for message in messages %}{{ message }}{% endfor %}</div>
+          <div class="sent-message">Your message has been sent. Thank you!</div>
+      </div>
+      <div class="text-center">
+          <button type="submit">Send Message</button>
+      </div>
+  </form>
+</div>
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6">
+            <div class="footer-info">
+              <h3>Medicio</h3>
+              <p>
+                Medicio Donation,6th street road,
+                  <br>Trivandrum<br><br>
+                <strong>Phone:</strong> +91 45 897 245 36<br>
+                <strong>Email:</strong> Borgdonation@gmail.com<br>
+              </p>
+              <div class="social-links mt-3">
+                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Login</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Sign Up</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Search</a></li>
+                <li><i class="bx bx-chevron-right"></i> <a href="#">Contact Us</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Our Services</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Want To Donate Blood</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Looking For Blood</a></li>
+
+            </ul>
+          </div>
+
+          <div class="col-lg-4 col-md-6 footer-newsletter">
+           <!-- <h4>Our Newsletter</h4>
+            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>-->
+            <form action="" method="post">
+              <input type="email" name="email"><input type="submit" value="Subscribe">
+            </form>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>B-org</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/medicio-free-bootstrap-theme/ -->
+
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'bloodhome/assets/vendor/purecounter/purecounter_vanilla.js'%}"></script>
+  <script src="{% static 'bloodhome/assets/vendor/aos/aos.js'%}"></script>
+  <script src="{% static 'bloodhome/assets/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+  <script src="{% static 'bloodhome/assets/vendor/glightbox/js/glightbox.min.js'%}"></script>
+  <script src="{% static 'bloodhome/assets/vendor/swiper/swiper-bundle.min.js'%}"></script>
+  <script src="{% static 'bloodhome/assets/vendor/php-email-form/validate.js'%}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'bloodhome/assets/js/main.js'%}"></script>
+
+</body>
+
+</html>

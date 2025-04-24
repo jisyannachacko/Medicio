@@ -1,0 +1,457 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Medicio - Donor Registration</title> {# Updated Title #}
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <link href="{% static 'hospitalhome/assets/img/favicon.png'%}" rel="icon">
+    <link href="{% static 'hospitalhome/assets/img/apple-touch-icon.png'%}" rel="apple-touch-icon">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+
+    <link href="{% static 'hospitalhome/assets/vendor/animate.css/animate.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/aos/aos.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/bootstrap-icons/bootstrap-icons.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/boxicons/css/boxicons.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/glightbox/css/glightbox.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/swiper/swiper-bundle.min.css'%}" rel="stylesheet">
+
+    <link href="{% static 'hospitalhome/assets/css/style.css'%}" rel="stylesheet">
+
+    {# Removed original inline style block #}
+
+</head>
+
+<body>
+
+    {# Medicio header with dynamic navbar based on authentication status #}
+    <header id="header" class="fixed-top d-flex align-items-center">
+        <div class="container d-flex justify-content-between align-items-center">
+
+            <div class="logo">
+                {# Site title "Medicio" #}
+                <h1 class="text-light"><a href="/"><span>Medicio</span></a></h1> {# Link to home page #}
+            </div>
+
+            <!-- In all HTML files -->
+<nav id="navbar" class="navbar">
+    <ul>
+        {% if user_authenticated %}
+            <!-- Authenticated Links -->
+            <li><a class="nav-link" href="{% url 'organ_dashboard' %}">Dashboard</a></li>
+            <li><a class="nav-link" href="{% url 'kidney_liver_donor_register' %}">Become a Donor</a></li>
+            <li><a class="nav-link" href="{% url 'organ_search' %}">Search Organs</a></li>
+            <li><a class="nav-link" href="{% url 'submit_organ_request' %}">Submit Request</a></li>
+            <li><a class="nav-link" href="{% url 'organ_logout' %}">Logout</a></li>
+        {% else %}
+            <!-- Guest Links -->
+            <li><a class="nav-link" href="/">Home</a></li>
+            <li><a class="nav-link" href="{% url 'organ_login' %}">Login</a></li>
+            <li><a class="nav-link" href="{% url 'organ_signup' %}">Sign Up</a></li>
+        {% endif %}
+    </ul>
+</nav></div>
+    </header>{# Using a main section and container for the page content #}
+    <main id="main" style="margin-top: 100px;"> {# Added margin-top to clear the fixed header #}
+        <section class="donor-registration-section"> {# Custom class for this section #}
+            <div class="container">
+                {# Content from your original HTML - placed inside the container #}
+
+                {# Applied Bootstrap heading and margin classes #}
+                <h1 class="mb-4">Kidney and Liver Donor Registration</h1>
+
+                {# Styled alert with Bootstrap classes #}
+                <div class="alert alert-info mb-4" role="alert"> {# Added mb-4 for spacing #}
+                    <p><strong>Kidney Donation:</strong> Kidney donation is one of the most common living donor procedures. A healthy person can donate one kidney while maintaining normal kidney function with their remaining kidney.</p>
+                    <p class="mb-0"><strong>Liver Donation:</strong> A person can donate a portion of their liver. The donor's liver will regenerate and regain full function, while the donated portion will grow to normal size in the recipient.</p> {# mb-0 removes bottom margin on last p in alert #}
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    {# --- Organ Selection Section --- #}
+                    <div class="mb-5"> {# Added bottom margin for sections #}
+                        <h2 class="mb-3">Organ Selection</h2> {# Applied Bootstrap heading and margin #}
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label class="form-label d-block">Select Organs to Donate:</label> {# Added .form-label and .d-block #}
+                            {# Replaced custom radio group with Bootstrap form-check #}
+                            <div class="form-check form-check-inline"> {# form-check-inline for horizontal radios #}
+                                <input class="form-check-input" type="radio" id="organ_kidney" name="selected_organ" value="kidney" required>
+                                <label class="form-check-label" for="organ_kidney">Kidney</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="organ_liver" name="selected_organ" value="liver">
+                                <label class="form-check-label" for="organ_liver">Liver</label>
+                            </div>
+                             <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="organ_both" name="selected_organ" value="both">
+                                <label class="form-check-label" for="organ_both">Both Kidney and Liver</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    {# --- Personal Information Section --- #}
+                     <div class="mb-5"> {# Added bottom margin for sections #}
+                        <h2 class="mb-3">Personal Information</h2> {# Applied Bootstrap heading and margin #}
+
+                        {# Applied Bootstrap form group and input classes #}
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="first" class="form-label">First Name</label>
+                            <input type="text" id="first" name="first" class="form-control" required>
+                        </div>
+
+                        {# Applied Bootstrap form group and input classes #}
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="last" class="form-label">Last Name</label>
+                            <input type="text" id="last" name="last" class="form-control" required>
+                        </div>
+
+                        {# Applied Bootstrap form group and input classes #}
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="age" class="form-label">Age</label>
+                            <input type="number" id="age" name="age" class="form-control" required min="18">
+                             {# Applied Bootstrap small text styling #}
+                            <small class="form-text text-muted">Must be 18 years or older to donate</small>
+                        </div>
+
+                        {# Applied Bootstrap form group and input classes #}
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="birthday" class="form-label">Date of Birth</label>
+                            <input type="date" id="birthday" name="birthday" class="form-control" required>
+                        </div>
+
+                         {# Applied Bootstrap form group and select classes #}
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="gender" class="form-label">Gender</label>
+                            <select id="gender" name="gender" class="form-select" required> {# Applied .form-select #}
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    {# --- Contact Information Section --- #}
+                     <div class="mb-5"> {# Added bottom margin for sections #}
+                        <h2 class="mb-3">Contact Information</h2> {# Applied Bootstrap heading and margin #}
+
+                         {# Applied Bootstrap form group and input classes #}
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" id="address" name="address" class="form-control" required>
+                        </div>
+
+                         {# Applied Bootstrap form group and input classes #}
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="pin" class="form-label">Pin Code</label>
+                            <input type="text" id="pin" name="pin" class="form-control" required>
+                        </div>
+
+                         {# Applied Bootstrap form group and input classes #}
+                         <div class="mb-3">
+                            <label for="district" class="form-label">District</label>
+                            <select id="district" name="district" class="form-select" required>
+                                <option value="" disabled selected>Select your district</option>
+                                <option value="Alappuzha">Alappuzha</option>
+                                <option value="Ernakulam">Ernakulam</option>
+                                <option value="Idukki">Idukki</option>
+                                <option value="Kannur">Kannur</option>
+                                <option value="Kasaragod">Kasaragod</option>
+                                <option value="Kollam">Kollam</option>
+                                <option value="Kottayam">Kottayam</option>
+                                <option value="Kozhikode">Kozhikode</option>
+                                <option value="Malappuram">Malappuram</option>
+                                <option value="Palakkad">Palakkad</option>
+                                <option value="Pathanamthitta">Pathanamthitta</option>
+                                <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+                                <option value="Thrissur">Thrissur</option>
+                                <option value="Wayanad">Wayanad</option>
+                            </select>
+                        </div>
+                        
+
+                         {# Applied Bootstrap form group and input classes #}
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="state" class="form-label">State</label>
+                            <label for="state" class="form-label">District</label>
+                            <select id="state" name="state" class="form-select" required>
+                                <option value="" disabled selected>Select your state</option>
+                                <option value="Kerala">Kerala</option>
+                            </select>
+                        </div>
+
+                         {# Applied Bootstrap form group and select classes #}
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="hospital" class="form-label">Hospital</label>
+                            <select id="hospital" name="hospital" class="form-select" required> {# Applied .form-select #}
+                                <option value="">Select Hospital</option>
+                                {# Loop to populate hospitals from context #}
+                                {% for hospital in hospitals %}
+                                <option value="{{ hospital.Hospital_Name }}">{{ hospital.Hospital_Name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    {# --- Medical Information Section --- #}
+                     <div class="mb-5"> {# Added bottom margin for sections #}
+                         <h2 class="mb-3">Medical Information</h2> {# Applied Bootstrap heading and margin #}
+
+                         {# Applied Bootstrap form group and input classes #}
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="weight" class="form-label">Weight (kg)</label>
+                            <input type="number" id="weight" name="weight" step="0.01" class="form-control" required>
+                        </div>
+
+                         {# Applied Bootstrap form group and input classes #}
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="height" class="form-label">Height (cm)</label>
+                            <input type="number" id="height" name="height" step="0.01" class="form-control" required>
+                        </div>
+
+                         {# Applied Bootstrap form group and select classes #}
+                         <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="blood_type" class="form-label">Blood Type</label>
+                            <select id="blood_type" name="blood_type" class="form-select" required> {# Applied .form-select #}
+                                <option value="">Select Blood Type</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+
+                        {# Replaced custom checkbox group with Bootstrap form-check #}
+                        <div class="mb-3"> {# Replaces .form-group #}
+                             <label class="form-label d-block">Tests Completed:</label> {# Label for the group #}
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="liver_tests_done" name="liver_tests_done">
+                                <label class="form-check-label" for="liver_tests_done">I have completed liver function tests (Only applicable for liver donors)</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="kidney_tests_done" name="kidney_tests_done">
+                                <label class="form-check-label" for="kidney_tests_done">I have completed kidney function tests (Only applicable for kidney donors)</label>
+                            </div>
+                        </div>
+
+                         {# Standard medical questions - Applied Bootstrap form group and select classes #}
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="diabetic" class="form-label">Diabetic</label>
+                            <select id="diabetic" name="diabetic" class="form-select" required> {# Applied .form-select #}
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="hiv" class="form-label">HIV</label>
+                            <select id="hiv" name="hiv" class="form-select" required> {# Applied .form-select #}
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="hepatitis" class="form-label">Hepatitis</label>
+                            <select id="hepatitis" name="hepatitis" class="form-select" required> {# Applied .form-select #}
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="hypertension" class="form-label">Hypertension</label>
+                            <select id="hypertension" name="hypertension" class="form-select" required> {# Applied .form-select #}
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="cancer" class="form-label">Cancer History</label>
+                            <select id="cancer" name="cancer" class="form-select" required> {# Applied .form-select #}
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
+
+                         {# Applied Bootstrap form group and select/input classes #}
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="medicine" class="form-label">Currently Taking Medicine?</label>
+                            <select id="medicine" name="medicine" class="form-select" required> {# Applied .form-select #}
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="medicine_name" class="form-label">Medicine Name (if yes)</label>
+                            <input type="text" id="medicine_name" name="medicine_name" class="form-control"> {# Applied .form-control #}
+                        </div>
+
+                        {# Applied Bootstrap form group and select/input classes #}
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="disease" class="form-label">Any Chronic Disease?</label>
+                            <select id="disease" name="disease" class="form-select" required> {# Applied .form-select #}
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="disease_name" class="form-label">Disease Name (if yes)</label>
+                            <input type="text" id="disease_name" name="disease_name" class="form-control"> {# Applied .form-control #}
+                        </div>
+
+                         {# Applied Bootstrap form group and select/input classes #}
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="surgery" class="form-label">Any Previous Surgery?</label>
+                            <select id="surgery" name="surgery" class="form-select" required> {# Applied .form-select #}
+                                <option value="No">No</option>
+                                <option value="Yes">Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="surgery_name" class="form-label">Surgery Name (if yes)</label>
+                            <input type="text" id="surgery_name" name="surgery_name" class="form-control"> {# Applied .form-control #}
+                        </div>
+                    </div>
+
+                    {# --- Donation Information Section --- #}
+                     <div class="mb-5"> {# Added bottom margin for sections #}
+                        <h2 class="mb-3">Donation Information</h2> {# Applied Bootstrap heading and margin #}
+
+                         {# Applied Bootstrap form group and select classes #}
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="donation_type" class="form-label">Donation Type</label>
+                            <select id="donation_type" name="donation_type" class="form-select" required> {# Applied .form-select #}
+                                <option value="living">Living Donor</option>
+                                <option value="deceased">Deceased Donor</option>
+                            </select>
+                        </div>
+
+                         {# Applied Bootstrap form group and input classes #}
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="emergency_name" class="form-label">Emergency Contact Name</label>
+                            <input type="text" id="emergency_name" name="emergency_name" class="form-control" required> {# Applied .form-control #}
+                        </div>
+
+                         {# Applied Bootstrap form group and input classes #}
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <label for="emergency_number" class="form-label">Emergency Contact Number</label>
+                            <input type="tel" id="emergency_number" name="emergency_number" class="form-control" required> {# Applied .form-control #}
+                        </div>
+
+                        {# Replaced custom checkbox items with Bootstrap form-check #}
+                        <div class="mb-3"> {# Replaces .form-group #}
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="family_consent" name="family_consent" required>
+                                <label class="form-check-label" for="family_consent">I confirm that my family is aware and consents to this organ donation</label>
+                            </div>
+                         </div>
+
+                         <div class="mb-3"> {# Replaces .form-group #}
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="understand_risks" name="understand_risks" required>
+                                <label class="form-check-label" for="understand_risks">I understand the risks associated with organ donation and confirm I have consulted with a healthcare professional</label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    {# Applied Bootstrap button and margin classes #}
+                    <div class="d-grid gap-2 mb-3"> {# d-grid for full-width button #}
+                        <button type="submit" class="btn btn-primary btn-lg">Submit Registration</button> {# Applied Bootstrap button classes, btn-lg for larger button #}
+                    </div>
+                </form>
+
+                {# Link back to Dashboard - Styled #}
+                <p class="text-center mt-4"><a href="{% url 'organ_dashboard' %}">Back to Dashboard</a></p>
+
+                {# End of content from your original HTML #}
+            </div>
+        </section>
+    </main>{# Using the Medicio theme footer #}
+    <footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6 footer-info">
+                        <h3>Medicio</h3> {# Footer title #}
+                        <p>Connecting donors, patients, and hospitals for organ transplantation.</p>
+                        {# Add social links if desired #}
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Useful Links</h4>
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="/">Home</a></li>
+                             {# Adding dashboard links to footer #}
+                            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'organ_dashboard' %}">Dashboard</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'kidney_liver_donor_register' %}">Become a Donor</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'organ_search' %}">Search Organs</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'submit_organ_request' %}">Submit Request</a></li>
+
+                            {# Add other relevant links #}
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li> {# Placeholder #}
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li> {# Placeholder #}
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li> {# Placeholder #}
+                        </ul>
+                    </div>
+
+                    {# Example Contact Info - Replace with your actual details #}
+                    <div class="col-lg-3 col-md-6 footer-contact">
+                        <h4>Contact Us</h4>
+                        <p>
+                            A108 Adam Street <br>
+                            New York, NY 535022<br>
+                            United States <br><br>
+                            <strong>Phone:</strong> +1 5589 55488 55<br>
+                            <strong>Email:</strong> info@example.com<br>
+                        </p>
+                    </div>
+
+                    {# Example more links or social media #}
+                    {# <div class="col-lg-3 col-md-6 footer-links"> ... </div> #}
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong><span>Medicio</span></strong>. All Rights Reserved
+            </div>
+            {# Optional: Add credits if required by the theme license #}
+            {# <div class="credits"> Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> </div> #}
+        </div>
+    </footer><a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <script src="{% static 'hospitalhome/assets/vendor/purecounter/purecounter_vanilla.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/aos/aos.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script> {# Bootstrap JS with Popper #}
+    <script src="{% static 'hospitalhome/assets/vendor/glightbox/js/glightbox.min.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/isotope-layout/isotope.pkgd.min.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/swiper/swiper-bundle.min.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/waypoints/noframework.waypoints.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/php-email-form/validate.js'%}"></script>
+
+    <script src="{% static 'hospitalhome/assets/js/main.js'%}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Table 03</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<link rel="stylesheet" href="{% static 'donortable/css/style.css' %}">
+
+	</head>
+	<body>
+	<form method="POST" action="{% url 'blood_details'%}?">{% csrf_token %}
+	<section class="ftco-section">
+
+			<div class="row">
+				<div class="col-md-12">
+					<h4 class="text-center mb-4">Details of Organ Donors</h4>
+					<div class="table-wrap">
+						<table class="table">
+					    <thead class="thead-primary">
+					      <tr>
+					        <th>First Name</th>
+					        <th>Address</th>
+					        <th>District</th>
+					        <th>State </th>
+					        <th>Date_Of_Birth</th>
+					        <th>Gender</th>
+					        <th>E_mail</th>
+					        <th>PH_number</th>
+					        <th>Blood_Group</th>
+					        <th>Id_Card </th>
+					        <th>Organ </th>
+
+
+
+
+					      </tr>
+					    </thead>
+					    <tbody>
+						{% for x in register %}
+					      <tr>
+					        <th scope="row" class="scope" >{{x.First_Name}}</th>
+					        <td>{{x.Address}}</td>
+					        <td>{{x.District}}</td>
+					        <td>{{x.State}}</td>
+					        <td>{{x.Date_Of_Birth}}</td>
+ 						  	<td>{{x.Gender}}</td>
+					        <td>{{x.E_mail}}</td>
+					        <td>{{x.PH_number}}</td>
+					        <td>{{x.Blood_Group}}</td>
+					        <td><a href="C:\Users\ALAN P NATH\PycharmProjects\blood_bank\blood_system\media\files\{{x.Id_Card}}">{{x.Id_Card}}</a></td>
+					        <td>{{x.Organ}}</td>
+
+
+					      </tr>
+{%endfor%}
+					    </tbody>
+					  </table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	</form>
+	<script src="{% static 'donortable/js/jquery.min.js' %}"></script>
+  <script src="{% static 'donortable/js/popper.js' %}"></script>
+  <script src="{% static 'donortable/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'donortable/js/main.js' %}"></script>
+
+	</body>
+</html>
+

@@ -1,0 +1,222 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Medicio - Organ Search Results</title> {# Updated Title #}
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <link href="{% static 'hospitalhome/assets/img/favicon.png'%}" rel="icon">
+    <link href="{% static 'hospitalhome/assets/img/apple-touch-icon.png'%}" rel="apple-touch-icon">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+
+    <link href="{% static 'hospitalhome/assets/vendor/animate.css/animate.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/aos/aos.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/bootstrap-icons/bootstrap-icons.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/boxicons/css/boxicons.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/glightbox/css/glightbox.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/swiper/swiper-bundle.min.css'%}" rel="stylesheet">
+
+    <link href="{% static 'hospitalhome/assets/css/style.css'%}" rel="stylesheet">
+
+    {# Removed original inline style block #}
+
+</head>
+
+<body>
+
+    {# Medicio header with dynamic navbar based on authentication status #}
+    <header id="header" class="fixed-top d-flex align-items-center">
+        <div class="container d-flex justify-content-between align-items-center">
+
+            <div class="logo">
+                {# Site title "Medicio" #}
+                <h1 class="text-light"><a href="/"><span>Medicio</span></a></h1> {# Link to home page #}
+            </div>
+            <nav id="navbar" class="navbar">
+                <ul>
+                    {% if user_authenticated %}
+                        <!-- Authenticated Links -->
+                        <li><a class="nav-link" href="{% url 'organ_dashboard' %}">Dashboard</a></li>
+                        <li><a class="nav-link" href="{% url 'kidney_liver_donor_register' %}">Become a Donor</a></li>
+                        <li><a class="nav-link" href="{% url 'organ_search' %}">Search Organs</a></li>
+                        <li><a class="nav-link" href="{% url 'submit_organ_request' %}">Submit Request</a></li>
+                        <li><a class="nav-link" href="{% url 'organ_logout' %}">Logout</a></li>
+                    {% else %}
+                        <!-- Guest Links -->
+                        <li><a class="nav-link" href="/">Home</a></li>
+                        <li><a class="nav-link" href="{% url 'organ_login' %}">Login</a></li>
+                        <li><a class="nav-link" href="{% url 'organ_signup' %}">Sign Up</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+         </div>
+    </header>{# Using a main section and container for the page content #}
+    <main id="main" style="margin-top: 100px;"> {# Added margin-top to clear the fixed header #}
+        <section class="search-results-section py-5"> {# Custom class, added padding #}
+            <div class="container">
+                {# Content from your original HTML - placed inside the container #}
+
+                {# Applied Bootstrap heading and margin classes #}
+                <h2 class="mb-4">Organ Search Results</h2>
+
+                {# Search parameters - styled with margin #}
+                <div class="search-params mb-4"> {# Applied Bootstrap margin #}
+                    <p>
+                        <strong>Organ Type:</strong> {{ organ_type }}<br>
+                        {% if blood_type %}
+                        <strong>Blood Type:</strong> {{ blood_type }}
+                        {% endif %}
+                    </p>
+                </div>
+
+                {% if results %}
+                    {# Applied Bootstrap alert for success message #}
+                    <div class="alert alert-success mb-4" role="alert"> {# Applied Bootstrap alert and margin #}
+                        Found {{ results|length }} matching organ(s) available.
+                    </div>
+
+                    {# Table wrapper for responsiveness #}
+                    <div class="table-responsive"> {# Applied Bootstrap table-responsive #}
+                        {# Applied Bootstrap table classes #}
+                        <table class="table table-striped table-bordered"> {# Added table-bordered for visibility #}
+                            <thead>
+                                <tr>
+                                    <th>Organ Type</th>
+                                    <th>Blood Type</th>
+                                    <th>Hospital</th>
+                                    <th>District</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in results %}
+                                <tr>
+                                    <td>{{ item.organ_type.Organ_Name }}</td>
+                                    <td>{{ item.blood_type }}</td>
+                                     {# Assuming item.hospital is an object with Hospital_Name #}
+                                    <td>{{ item.hospital.Hospital_Name }}</td>
+                                    <td>{{ item.hospital.District }}</td>
+
+                                    <td>
+                                        {# Applied Bootstrap badge classes #}
+                                        <span class="badge {% if item.availability_status == 'available' %}bg-success{% else %}bg-warning{% endif %}">
+                                            {{ item.availability_status|title }} {# Capitalize status #}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {% if user_authenticated %}
+                                            <a href="{% url 'submit_organ_request' %}?organ_id={{ item.organ_type.id }}&hospital={{ item.hospital.id }}" 
+                                               class="btn btn-sm btn-primary">
+                                                Request
+                                            </a>
+                                        {% else %}
+                                            <button class="btn btn-sm btn-secondary" 
+                                                    disabled 
+                                                    title="Please login to make a request"
+                                                    data-bs-toggle="tooltip">
+                                                Request
+                                            </button>
+                                            <small class="text-muted d-block mt-1">
+                                                <a href="{% url 'organ_login' %}?next={% url 'organ_search' %}">Login</a> to request
+                                            </small>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    {# Applied Bootstrap alert for no results message #}
+                    <div class="alert alert-warning mb-4" role="alert"> {# Applied Bootstrap alert and margin #}
+                        No matching organs found for your search criteria. Please try different parameters or check back later.
+                    </div>
+                {% endif %}
+
+                {# New Search link - styled with margin #}
+                <div class="mt-3"> {# Applied Bootstrap margin-top #}
+                    <a href="{% url 'organ_search' %}" class="btn btn-secondary">New Search</a> {# Applied Bootstrap button classes #}
+                </div>
+
+                {# End of content from your original HTML #}
+            </div>
+        </section>
+    </main>{# Using the Medicio theme footer #}
+    <footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6 footer-info">
+                        <h3>Medicio</h3> {# Footer title #}
+                        <p>Connecting donors, patients, and hospitals for organ transplantation.</p>
+                        {# Add social links if desired #}
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Useful Links</h4>
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="/">Home</a></li>
+                             {# Adding dashboard links to footer #}
+                             <li><i class="bx bx-chevron-right"></i> <a href="{% url 'organ_dashboard' %}">Dashboard</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'kidney_liver_donor_register' %}">Become a Donor</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'organ_search' %}">Search Organs</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'submit_organ_request' %}">Submit Request</a></li>
+
+                            {# Add other relevant links #}
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li> {# Placeholder #}
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li> {# Placeholder #}
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li> {# Placeholder #}
+                        </ul>
+                    </div>
+
+                    {# Example Contact Info - Replace with your actual details #}
+                    <div class="col-lg-3 col-md-6 footer-contact">
+                        <h4>Contact Us</h4>
+                        <p>
+                            A108 Adam Street <br>
+                            New York, NY 535022<br>
+                            United States <br><br>
+                            <strong>Phone:</strong> +1 5589 55488 55<br>
+                            <strong>Email:</strong> info@example.com<br>
+                        </p>
+                    </div>
+
+                    {# Example more links or social media #}
+                    {# <div class="col-lg-3 col-md-6 footer-links"> ... </div> #}
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong><span>Medicio</span></strong>. All Rights Reserved
+            </div>
+            {# Optional: Add credits if required by the theme license #}
+            {# <div class="credits"> Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> </div> #}
+        </div>
+    </footer><a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <script src="{% static 'hospitalhome/assets/vendor/purecounter/purecounter_vanilla.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/aos/aos.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script> {# Bootstrap JS with Popper #}
+    <script src="{% static 'hospitalhome/assets/vendor/glightbox/js/glightbox.min.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/isotope-layout/isotope.pkgd.min.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/swiper/swiper-bundle.min.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/waypoints/noframework.waypoints.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/php-email-form/validate.js'%}"></script>
+
+    <script src="{% static 'hospitalhome/assets/js/main.js'%}"></script>
+
+</body>
+
+</html>

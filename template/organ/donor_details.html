@@ -1,0 +1,218 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Medicio - Donor Details</title> {# Updated Title #}
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <link href="{% static 'hospitalhome/assets/img/favicon.png'%}" rel="icon">
+    <link href="{% static 'hospitalhome/assets/img/apple-touch-icon.png'%}" rel="apple-touch-icon">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+
+    <link href="{% static 'hospitalhome/assets/vendor/animate.css/animate.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/aos/aos.css'%}" rel="stylesheet">
+    {# Using Bootstrap 5 #}
+    <link href="{% static 'hospitalhome/assets/vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/bootstrap-icons/bootstrap-icons.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/boxicons/css/boxicons.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/glightbox/css/glightbox.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/swiper/swiper-bundle.min.css'%}" rel="stylesheet">
+
+    <link href="{% static 'hospitalhome/assets/css/style.css'%}" rel="stylesheet">
+
+    {# No custom styles like .donor-row-clickable needed for the details page #}
+
+</head>
+
+<body>
+
+    {# Using the Bootstrap Medicio header structure from the reference page #}
+    <header id="header" class="fixed-top d-flex align-items-center">
+        <div class="container d-flex justify-content-between align-items-center">
+
+            <div class="logo">
+                <h1 class="text-light"><a href="{% url 'hosp_serv' %}"><span>Medicio</span></a></h1> {# Link to Hospital Dashboard #}
+            </div>
+
+            <nav id="navbar" class="navbar">
+                <ul>
+                     {# Hospital Dashboard Navigation Links #}
+                    <li><a class="nav-link" href="{% url 'hosp_serv' %}">Dashboard</a></li>
+                     {# Mark Organ Donors as active #}
+                    <li><a class="nav-link active" href="{% url 'hospital_view_organ_donors' %}">Organ Donors</a></li>
+                    <li><a class="nav-link" href="{% url 'hospital_view_organ_requests' %}">Organ Requests</a></li>
+                    <li><a class="nav-link" href="{% url 'organ_inventory' %}">Organ Inventory</a></li>
+                     {# Assuming you have Blood Inventory/Requests links as well #}
+                     <li><a class="nav-link" href="{% url 'blood_inv' %}">Blood Inventory</a></li> {# Example Blood Inventory URL #}
+                     <li><a class="nav-link" href="{% url 'view_requests' %}">Blood Requests</a></li> {# Example Blood Requests URL #}
+
+
+                    <li><a class="nav-link" href="{% url 'logout' %}">Logout</a></li> {# Logout link #}
+
+                     {# Display Hospital Name/Identifier if available in session #}
+                     {% if request.session.id %}
+                         <li class="nav-link disabled text-white-50 ms-3">Hospital: {{ request.session.id }}</li> {# Added ms-3 for margin #}
+                     {% endif %}
+
+                    {# Mobile navigation toggle (part of Medicio theme JS) #}
+                    {# <i class="bi bi-list mobile-nav-toggle"></i> #}
+                </ul>
+            </nav></div>
+    </header><main id="main" style="margin-top: 100px;"> {# Added margin-top to clear the fixed header #}
+        <section class="donor-details-section py-5"> {# Custom class, added padding #}
+            <div class="container"> {# Applied Bootstrap container #}
+
+                {# Back button - Styled with Bootstrap classes #}
+                <a href="{% url 'hospital_view_organ_donors' %}" class="btn btn-secondary mb-4"><i class="bi bi-arrow-left me-2"></i> Back to Donors</a> {# Applied Bootstrap button, margin, and icon #}
+
+                {# Main heading - Styled with Bootstrap heading and margin #}
+                <h2 class="mb-4">Donor Details</h2>
+
+                {# Card containing donor information - Styled with Bootstrap card #}
+                <div class="card shadow"> {# Added shadow for visual separation #}
+                    <div class="card-body"> {# Applied Bootstrap card body #}
+
+                        {# Donor Name - Styled with Bootstrap card title #}
+                        <h4 class="card-title mb-3">{{ donor.First_Name }} {{ donor.Last_Name }}</h4> {# Applied Bootstrap card title and margin #}
+
+                        {# Layout for personal and medical info - Using Bootstrap row and columns #}
+                        <div class="row">
+                            <div class="col-md-6 mb-3"> {# Applied Bootstrap column and margin #}
+                                {# Heading for section - Styled with Bootstrap heading #}
+                                <h5 class="border-bottom pb-2 mb-3">Personal Information</h5> {# Added border and padding below, margin below #}
+                                {# Information paragraphs - Styled with Bootstrap text #}
+                                <p class="mb-1"><strong>Age:</strong> {{ donor.Age }}</p> {# mb-1 for tight spacing #}
+                                <p class="mb-1"><strong>Date of Birth:</strong> {{ donor.Date_Of_Birth|date:"M d, Y" }}</p> {# Added date format #}
+                                <p class="mb-1"><strong>Gender:</strong> {{ donor.Gender }}</p>
+                                <p class="mb-1"><strong>Address:</strong> {{ donor.Address }}, {{ donor.District }}, {{ donor.State }} - {{ donor.PinCode }}</p>
+                                <p class="mb-1"><strong>Blood Type:</strong> <span class="badge bg-primary">{{ donor.Blood_Type }}</span></p> {# Added badge for blood type #}
+                                <p class="mb-1"><strong>Weight:</strong> {{ donor.Weight }} kg</p>
+                                <p class="mb-1"><strong>Height:</strong> {{ donor.Height|default:"N/A" }} cm</p>
+                            </div>
+
+                            <div class="col-md-6 mb-3"> {# Applied Bootstrap column and margin #}
+                                {# Heading for section - Styled with Bootstrap heading #}
+                                <h5 class="border-bottom pb-2 mb-3">Medical Information</h5> {# Added border and padding below, margin below #}
+                                {# Information paragraphs - Styled with Bootstrap text #}
+                                <p class="mb-1"><strong>Diabetic:</strong> {{ donor.Diabetic }}</p>
+                                <p class="mb-1"><strong>HIV:</strong> {{ donor.HIV }}</p>
+                                <p class="mb-1"><strong>Hepatitis:</strong> {{ donor.Hepatitis|default:"N/A" }}</p>
+                                <p class="mb-1"><strong>Hypertension:</strong> {{ donor.Hypertension|default:"N/A" }}</p>
+                                <p class="mb-1"><strong>Cancer History:</strong> {{ donor.Cancer_History|default:"N/A" }}</p>
+                                <p class="mb-1"><strong>Medication:</strong> {{ donor.Medicine }}
+                                                                    {% if donor.Medicine == 'Yes' and donor.Medicine_Name %}
+                                                                        ({{ donor.Medicine_Name }})
+                                                                    {% endif %}
+                                                                </p>
+                            </div>
+                        </div>
+
+                        <hr class="my-4"> {# Styled horizontal rule with margin #}
+
+                        {# Organ Donation Details Section #}
+                        <div class="row">
+                            <div class="col-12"> {# Full width column #}
+                                {# Heading for section - Styled with Bootstrap heading #}
+                                <h5 class="border-bottom pb-2 mb-3">Organ Donation Details</h5> {# Added border and padding below, margin below #}
+                                {# Information paragraphs - Styled with Bootstrap text #}
+                                <p class="mb-1"><strong>Donation Type:</strong> {{ donor.get_Donation_Type_display }}</p>
+                                <p class="mb-1"><strong>Organs Donated:</strong>
+                                                                    {% for organ in donor.Organs_Donated.all %}
+                                                                        {{ organ.Organ_Name }}{% if not forloop.last %}, {% endif %}
+                                                                    {% empty %}
+                                                                        No organs specified
+                                                                    {% endfor %}
+                                                                </p>
+                                {# Status badge - Styled with Bootstrap badge classes #}
+                                <p class="mb-1"><strong>Status:</strong>
+                                                                    <span class="badge
+                                                                        {% if donor.status == 'pending' %}bg-warning text-dark
+                                                                        {% elif donor.status == 'accepted' %}bg-success
+                                                                        {% else %}bg-danger{% endif %}">
+                                                                        {{ donor.status|title }}
+                                                                    </span>
+                                                                </p>
+                                 {# Removed redundant link wrapping status badge #}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </section>
+    </main>{# Using the Bootstrap Medicio theme footer from the reference page #}
+    <footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6 footer-info">
+                        <h3>Medicio</h3> {# Footer title #}
+                        <p>Hospital Dashboard Footer Info.</p> {# Example footer text #}
+                         {# Add links or info relevant to the hospital dashboard #}
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Dashboard Links</h4>
+                         <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'hosp_serv' %}">Dashboard</a></li>
+                             <li><i class="bx bx-chevron-right"></i> <a href="{% url 'hospital_view_organ_donors' %}">Organ Donors</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'hospital_view_organ_requests' %}">Organ Requests</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'organ_inventory' %}">Organ Inventory</a></li>
+                             <li><i class="bx bx-chevron-right"></i> <a href="{% url 'blood_inv' %}">Blood Inventory</a></li>
+                             <li><i class="bx bx-chevron-right"></i> <a href="{% url 'view_requests' %}">Blood Requests</a></li>
+                        </ul>
+                    </div>
+
+                    {# Example Contact Info - Replace with your actual details #}
+                    <div class="col-lg-3 col-md-6 footer-contact">
+                        <h4>Hospital Contact</h4> {# Example title #}
+                        <p>
+                            Hospital Address Line 1 <br>
+                            Hospital Address Line 2<br>
+                            City, State, ZIP<br><br>
+                            <strong>Phone:</strong> +1 123 456 7890<br> {# Example Phone #}
+                            <strong>Email:</strong> hospital@example.com<br> {# Example Email #}
+                        </p>
+                    </div>
+
+                     {# Optional: Another column for links or social media #}
+                     {# <div class="col-lg-3 col-md-6 footer-links"> ... </div> #}
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong><span>Medicio</span></strong>. All Rights Reserved
+            </div>
+             {# Optional: Add credits if required by the theme license #}
+            {# <div class="credits"> Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> </div> #}
+        </div>
+    </footer><a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <script src="{% static 'hospitalhome/assets/vendor/purecounter/purecounter_vanilla.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/aos/aos.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script> {# Bootstrap JS with Popper #}
+    <script src="{% static 'hospitalhome/assets/vendor/glightbox/js/glightbox.min.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/isotope-layout/isotope.pkgd.min.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/swiper/swiper-bundle.min.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/waypoints/noframework.waypoints.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/php-email-form/validate.js'%}"></script>
+
+    <script src="{% static 'hospitalhome/assets/js/main.js'%}"></script>
+
+    {# No custom Javascript for row clicking needed on this details page #}
+
+</body>
+
+</html>

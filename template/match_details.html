@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% block title %}Match Details | Organ Donation System{% endblock %}
+{% block content %}
+<!-- Page Header -->
+<div class="page-header">
+    <div class="container">
+        <h1>Match Details</h1>
+        <p class="lead">View information about your organ donation match</p>
+    </div>
+</div>
+<div class="container mb-5">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card shadow">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="card-title mb-0">
+                        Match #{{ match.id }}
+                        {% if match.status == 0 %}
+                            <span class="badge bg-warning float-end">Pending</span>
+                        {% elif match.status == 1 %}
+                            <span class="badge bg-primary float-end">In Process</span>
+                        {% elif match.status == 2 %}
+                            <span class="badge bg-success float-end">Completed</span>
+                        {% elif match.status == 3 %}
+                            <span class="badge bg-danger float-end">Failed</span>
+                        {% endif %}
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <p><strong>Match Date:</strong> {{ match.matched_date|date:"F d, Y" }}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p><strong>Organ:</strong> {{ match.donor.get_organ_display }}</p>
+                        </div>
+                        <div class="col-md-4">
+                            {% if match.transplant_date %}
+                                <p><strong>Transplant Date:</strong> {{ match.transplant_date|date:"F d, Y" }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <!-- Donor Information -->
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header bg-success text-white">
+                                    <h4 class="card-title mb-0">Donor Information</h4>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Name:</strong> {{ match.donor.first_name }} {{ match.donor.last_name }}</p>
+                                    <p><strong>Age:</strong> {{ match.donor.age }}</p>
+                                    <p><strong>Blood Group:</strong> {{ match.donor.blood_group }}</p>
+                                    <p><strong>Gender:</strong> {{ match.donor.get_gender_display }}</p>
+                                    
+                                    {% if match.donor.user == user %}
+                                        <div class="alert alert-info mt-3">
+                                            <p class="mb-0"><strong>Note:</strong> This is your donation record. <a href="{% url 'donation_details' match.donor.id %}">View full details</a></p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Recipient Information -->
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header bg-primary text-white">
+                                    <h4 class="card-title mb-0">Recipient Information</h4>
+                                </div>
+                                <div class="card-body">
+                                    <p><strong>Patient Name:</strong> {{ match.recipient.patient_first_name }} {{ match.recipient.patient_last_name }}</p>
+                                    <p><strong>Age:</strong> {{ match.recipient.age }}</p>
+                                    <p><strong>Blood Group:</strong> {{ match.recipient.blood_group }}</p>
+                                    <p><strong>Medical Condition:</strong> {{ match.recipient.medical_condition|truncatechars:100 }}</p>
+                                    
+                                    {% if match.recipient.user == user %}
+                                        <div class="alert alert-info mt-3">
+                                            <p class="mb-0"><strong>Note:</strong> This is your request record. <a href="{% url 'request_details' match.recipient.id %}">View full details</a></p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Hospital & Procedure Information -->
+                    {% if match.status >= 1 %}
+                    <div class="card mb-4">
+                        <div class="card-header bg-info text-white">
+                            <h4 class="card-title mb-0">Transplant Information</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Hospital:</strong> {{ match.hospital|default:"To be determined" }}</p>
+                                    <p><strong>Doctor:</strong> {{ match.doctor|default:"To be determined" }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Status:</strong> {{ match.get_status_display }}</p>
+                                    {% if match.notes %}
+                                        <p><strong>Additional Notes:</strong> {{ match.notes }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Contact Information (Only shown when match is confirmed) -->
+                    {% if match.status >= 1 and match.status != 3 %}
+                    <div class="card mb-4">
+                        <div class="card-header bg-warning text-dark">
+                            <h4 class="card-title mb-0">Important Contact Information</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>For any questions or concerns regarding this match, please contact our organ coordination team:</p>
+                            <ul class="list-unstyled">
+                                <li><strong>Email:</strong> coordination@organtransplant.org</li>
+                                <li><strong>Phone:</strong> 1-800-ORGAN-HELP</li>
+                                <li><strong>Emergency:</strong> If you have an urgent matter regarding this transplant, please call our 24/7 hotline at 1-888-ORG-EMER</li>
+                            </ul>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Timeline -->
+                    <div class="card">
+                        <div class="card-header bg-secondary text-white">
+                            <h4 class="card-title mb-0">Match Timeline</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="timeline">
+                                <li class="timeline-item">
+                                    <div class="timeline-marker bg-success"></div>
+                                    <div class="timeline-content">
+                                        <h5>Match Created</h5>
+                                        <p>{{ match.matched_date|date:"F d, Y" }}</p>
+                                    </div>
+                                </li>
+                                
+                                {% if match.status >= 1 %}
+                                <li class="timeline-item">
+                                    <div class="timeline-marker {% if match.status >= 1 %}bg-success{% else %}bg-secondary{% endif %}"></div>
+                                    <div class="timeline-content">
+                                        <h5>Match Confirmed</h5>
+                                        <p>The match has been confirmed and is now in process</p>
+                                    </div>
+                                </li>
+                                {% endif %}
+                                
+                                {% if match.transplant_date %}
+                                <li class="timeline-item">
+                                    <div class="timeline-marker {% if match.status >= 2 %}bg-success{% else %}bg-secondary{% endif %}"></div>
+                                    <div class="timeline-content">
+                                        <h5>Transplant Scheduled</h5>
+                                        <p>{{ match.transplant_date|date:"F d, Y" }}</p>
+                                    </div>
+                                </li>
+                                {% endif %}
+                                
+                                {% if match.status == 2 %}
+                                <li class="timeline-item">
+                                    <div class="timeline-marker bg-success"></div>
+                                    <div class="timeline-content">
+                                        <h5>Transplant Completed</h5>
+                                        <p>The organ transplant has been successfully completed</p>
+                                    </div>
+                                </li>
+                                {% elif match.status == 3 %}
+                                <li class="timeline-item">
+                                    <div class="timeline-marker bg-danger"></div>
+                                    <div class="timeline-content">
+                                        <h5>Match Failed</h5>
+                                        <p>This match is no longer valid</p>
+                                    </div>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'user_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

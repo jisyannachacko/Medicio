@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>{% block title %}Medicio - Organ Donation System{% endblock %}</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'home/assets/img/favicon.png'%}" rel="icon">
+  <link href="{% static 'home/assets/img/apple-touch-icon.png'%}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'home/assets/vendor/aos/aos.css'%}" rel="stylesheet">
+  <link href="{% static 'home/assets/vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+  <link href="{% static 'home/assets/vendor/bootstrap-icons/bootstrap-icons.css'%}" rel="stylesheet">
+  <link href="{% static 'home/assets/vendor/boxicons/css/boxicons.min.css'%}" rel="stylesheet">
+  <link href="{% static 'home/assets/vendor/glightbox/css/glightbox.min.css'%}" rel="stylesheet">
+  <link href="{% static 'home/assets/vendor/remixicon/remixicon.css'%}" rel="stylesheet">
+  <link href="{% static 'home/assets/vendor/swiper/swiper-bundle.min.css'%}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'home/assets/css/style.css'%}" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <style>
+    .alert {
+        margin-top: 1rem;
+    }
+    {% block extra_css %}{% endblock %}
+  </style>
+</head>
+
+<body>
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center justify-content-lg-between">
+      <h1 class="logo me-auto me-lg-0"><a href="{% url 'organhome' %}">MEDI<span>CIO</span></a></h1>
+
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          <li><a class="nav-link scrollto" href="{% url 'organhome' %}">Home</a></li>
+          {% if user.is_authenticated %}
+          <li><a class="nav-link scrollto" href="{% url 'organ_dashboard' %}">Dashboard</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'organ_donor_register' %}">Register</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'organ_logout' %}">Logout</a></li>
+          {% else %}
+          <li><a class="nav-link scrollto" href="{% url 'organ_login' %}">Login</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'organ_signup' %}">Sign Up</a></li>
+          {% endif %}
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+    </div>
+  </header><!-- End Header -->
+
+  <!-- Message Alerts -->
+  <div class="container">
+    {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show mt-4" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <!-- Main Content -->
+  <main id="main">
+    {% block content %}{% endblock %}
+  </main><!-- End #main -->
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'home/assets/vendor/purecounter/purecounter_vanilla.js'%}"></script>
+  <script src="{% static 'home/assets/vendor/aos/aos.js'%}"></script>
+  <script src="{% static 'home/assets/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+  <script src="{% static 'home/assets/vendor/glightbox/js/glightbox.min.js'%}"></script>
+  <script src="{% static 'home/assets/vendor/isotope-layout/isotope.pkgd.min.js'%}"></script>
+  <script src="{% static 'home/assets/vendor/swiper/swiper-bundle.min.js'%}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'home/assets/js/main.js'%}"></script>
+
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

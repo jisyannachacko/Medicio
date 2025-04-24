@@ -1,0 +1,210 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Medicio - Organ Inventory</title> {# Updated Title #}
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <link href="{% static 'hospitalhome/assets/img/favicon.png'%}" rel="icon">
+    <link href="{% static 'hospitalhome/assets/img/apple-touch-icon.png'%}" rel="apple-touch-icon">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+
+    <link href="{% static 'hospitalhome/assets/vendor/animate.css/animate.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/aos/aos.css'%}" rel="stylesheet">
+    {# Using Bootstrap 5 #}
+    <link href="{% static 'hospitalhome/assets/vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/bootstrap-icons/bootstrap-icons.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/boxicons/css/boxicons.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/glightbox/css/glightbox.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/swiper/swiper-bundle.min.css'%}" rel="stylesheet">
+
+    <link href="{% static 'hospitalhome/assets/css/style.css'%}" rel="stylesheet">
+
+    {# Removed original inline style block #}
+
+</head>
+
+<body>
+
+    {# Using the Bootstrap Medicio header structure #}
+    <header id="header" class="fixed-top d-flex align-items-center">
+        <div class="container d-flex justify-content-between align-items-center">
+
+            <div class="logo">
+                <h1 class="text-light"><a href="{% url 'hosp_serv' %}"><span>Medicio</span></a></h1> {# Link to Hospital Dashboard #}
+            </div>
+
+            <nav id="navbar" class="navbar">
+                <ul>
+                     {# Hospital Dashboard Navigation Links #}
+                    <li><a class="nav-link" href="{% url 'hosp_serv' %}">Dashboard</a></li>
+                     <li><a class="nav-link" href="{% url 'hospital_view_organ_donors' %}">Organ Donors</a></li>
+                    <li><a class="nav-link" href="{% url 'hospital_view_organ_requests' %}">Organ Requests</a></li>
+                     {# Mark Organ Inventory as active #}
+                    <li><a class="nav-link active" href="{% url 'organ_inventory' %}">Organ Inventory</a></li>
+                    {# Assuming you have Blood Inventory/Requests links as well #}
+                     <li><a class="nav-link" href="{% url 'blood_inv' %}">Blood Inventory</a></li> {# Example Blood Inventory URL #}
+                     <li><a class="nav-link" href="{% url 'view_requests' %}">Blood Requests</a></li> {# Example Blood Requests URL #}
+
+
+                    <li><a class="nav-link" href="{% url 'logout' %}">Logout</a></li> {# Logout link #}
+
+                     {# Display Hospital Name/Identifier if available in session #}
+                     {% if request.session.id %}
+                         <li class="nav-link disabled text-white-50 ms-3">Hospital: {{ request.session.id }}</li> {# Added ms-3 for margin #}
+                     {% endif %}
+
+                    {# Mobile navigation toggle (part of Medicio theme JS) #}
+                    {# <i class="bi bi-list mobile-nav-toggle"></i> #}
+                </ul>
+            </nav></div>
+    </header><main id="main" style="margin-top: 100px;"> {# Added margin-top to clear the fixed header #}
+        <section class="organ-inventory-section py-5"> {# Custom class, added padding #}
+            <div class="container"> {# Applied Bootstrap container #}
+
+                {# Header Buttons from original nav div #}
+                <div class="d-flex justify-content-end mb-4"> {# Applied Bootstrap flex layout #}
+                     {# Styled buttons with Bootstrap classes #}
+                    <a href="{% url 'hospital_view_organ_donors' %}" class="btn btn-primary me-2">View Donor Applications</a> {# Applied Bootstrap button styles #}
+                    <a href="{% url 'hospital_view_organ_requests' %}" class="btn btn-warning">View Organ Requests</a> {# Applied Bootstrap button styles #}
+                </div>
+
+
+                {% if summary %}
+                    <h2 class="mb-4">Available Organs Summary</h2> {# Applied Bootstrap heading and margin #}
+                     {# Applied Bootstrap row for grid layout #}
+                    <div class="row mb-4"> {# Applied Bootstrap margin #}
+                        {% for organ, count in summary.items %}
+                             {# Applied Bootstrap column classes for grid layout #}
+                            <div class="col-md-4 col-lg-3 mb-4"> {# Applied Bootstrap column and margin #}
+                                {# Styled summary item with Bootstrap utility classes #}
+                                <div class="p-3 border rounded bg-light text-center"> {# Applied Bootstrap padding, border, rounded, background, text-center #}
+                                    <h3 class="h5 mb-2">{{ organ }}</h3> {# Applied Bootstrap heading (h5 size) and margin #}
+                                    <p class="text-muted">{{ count }} available</p> {# Applied Bootstrap text-muted #}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if inventory %}
+                    <h2 class="mb-4">Full Inventory</h2> {# Applied Bootstrap heading and margin #}
+                    {# Table wrapper for responsiveness #}
+                    <div class="table-responsive"> {# Applied Bootstrap table-responsive #}
+                        {# Applied Bootstrap table classes #}
+                        <table class="table table-striped table-bordered table-hover"> {# Applied Bootstrap table styles #}
+                            <thead>
+                                <tr>
+                                    <th>Organ Type</th>
+                                    <th>Blood Type</th>
+                                    <th>Status</th>
+                                    <th>Preservation Date</th>
+                                    <th>Donor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in inventory %}
+                                <tr>
+                                    <td>{{ item.organ_type.Organ_Name }}</td>
+                                    <td>{{ item.blood_type }}</td>
+                                     {# Applied Bootstrap text color and font-weight based on status #}
+                                    <td class="font-weight-bold
+                                        {% if item.availability_status == 'available' %}text-success{% elif item.availability_status == 'matched' %}text-primary{% elif item.availability_status == 'transplanted' %}text-muted{% else %}text-secondary{% endif %}">
+                                        {{ item.availability_status|title }}
+                                    </td>
+                                    <td>{{ item.preservation_date|date:"M d, Y" }}</td>
+                                    <td>
+                                        {% if item.donor %}
+                                        {{ item.donor.First_Name }} {{ item.donor.Last_Name }}
+                                        {% else %}
+                                        Unknown
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    {# Styled "no inventory" message with Bootstrap classes #}
+                    <div class="alert alert-info text-center mt-4" role="alert"> {# Applied Bootstrap alert, text-center, margin #}
+                        No organs in inventory.
+                    </div>
+                {% endif %}
+
+                {# End of content from your original HTML #}
+            </div>
+        </section>
+    </main>{# Using the Bootstrap Medicio theme footer #}
+    <footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6 footer-info">
+                        <h3>Medicio</h3> {# Footer title #}
+                        <p>Hospital Dashboard Footer Info.</p> {# Example footer text #}
+                         {# Add links or info relevant to the hospital dashboard #}
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Dashboard Links</h4>
+                         <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'hosp_serv' %}">Dashboard</a></li>
+                             <li><i class="bx bx-chevron-right"></i> <a href="{% url 'hospital_view_organ_donors' %}">Organ Donors</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'hospital_view_organ_requests' %}">Organ Requests</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'organ_inventory' %}">Organ Inventory</a></li>
+                             <li><i class="bx bx-chevron-right"></i> <a href="{% url 'blood_inv' %}">Blood Inventory</a></li>
+                             <li><i class="bx bx-chevron-right"></i> <a href="{% url 'view_requests' %}">Blood Requests</a></li>
+                        </ul>
+                    </div>
+
+                    {# Example Contact Info - Replace with your actual details #}
+                    <div class="col-lg-3 col-md-6 footer-contact">
+                        <h4>Hospital Contact</h4> {# Example title #}
+                        <p>
+                            Hospital Address Line 1 <br>
+                            Hospital Address Line 2<br>
+                            City, State, ZIP<br><br>
+                            <strong>Phone:</strong> +1 123 456 7890<br> {# Example Phone #}
+                            <strong>Email:</strong> hospital@example.com<br> {# Example Email #}
+                        </p>
+                    </div>
+
+                     {# Optional: Another column for links or social media #}
+                     {# <div class="col-lg-3 col-md-6 footer-links"> ... </div> #}
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong><span>Medicio</span></strong>. All Rights Reserved
+            </div>
+             {# Optional: Add credits if required by the theme license #}
+            {# <div class="credits"> Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> </div> #}
+        </div>
+    </footer><a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <script src="{% static 'hospitalhome/assets/vendor/purecounter/purecounter_vanilla.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/aos/aos.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script> {# Bootstrap JS with Popper #}
+    <script src="{% static 'hospitalhome/assets/vendor/glightbox/js/glightbox.min.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/isotope-layout/isotope.pkgd.min.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/swiper/swiper-bundle.min.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/waypoints/noframework.waypoints.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/php-email-form/validate.js'%}"></script>
+
+    <script src="{% static 'hospitalhome/assets/js/main.js'%}"></script>
+
+
+</body>
+
+</html>

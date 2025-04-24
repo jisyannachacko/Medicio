@@ -1,0 +1,217 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Blood Request Form - Medicio</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'hospitalhome/assets/img/favicon.png'%}" rel="icon">
+  <link href="{% static 'hospitalhome/assets/img/apple-touch-icon.png'%}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'hospitalhome/assets/vendor/animate.css/animate.min.css'%}" rel="stylesheet">
+  <link href="{% static 'hospitalhome/assets/vendor/aos/aos.css'%}" rel="stylesheet">
+  <link href="{% static 'hospitalhome/assets/vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+  <link href="{% static 'hospitalhome/assets/vendor/bootstrap-icons/bootstrap-icons.css'%}" rel="stylesheet">
+  <link href="{% static 'hospitalhome/assets/vendor/boxicons/css/boxicons.min.css'%}" rel="stylesheet">
+  <link href="{% static 'hospitalhome/assets/vendor/glightbox/css/glightbox.min.css'%}" rel="stylesheet">
+  <link href="{% static 'hospitalhome/assets/vendor/swiper/swiper-bundle.min.css'%}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'hospitalhome/assets/css/style.css'%}" rel="stylesheet">
+  
+  <style>
+    .request-form {
+      background-color: #f8f9fa;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+      margin-top: 30px;
+    }
+    .request-form h2 {
+      color: #1e4356;
+      margin-bottom: 30px;
+    }
+    .form-control {
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+    .btn-primary {
+      background-color: #1e4356;
+      border: none;
+    }
+    .btn-primary:hover {
+      background-color: #68A4C4;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex justify-content-between align-items-center">
+
+      <div class="logo">
+        <h1 class="text-light"><a href="{% url 'blood_home' %}"><span>Medicio</span></a></h1>
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a href="/bloodlogin">Home</a></li>
+          <li><a class="active" href="{% url 'submit_blood_request' %}">Request Blood</a></li>
+          <li><a href="{% url 'search' %}">Search Blood</a></li>
+          <li><a href="{% url 'donate' %}">Donate Blood</a></li>
+          <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <main id="main" style="margin-top: 100px;">
+    <section class="blood-request">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <div class="request-form">
+              <h2 class="text-center">Blood Request Form</h2>
+              
+              {% if messages %}
+              <div class="alert alert-info">
+                {% for message in messages %}
+                  {{ message }}
+                {% endfor %}
+              </div>
+              {% endif %}
+              
+              <form action="{% url 'submit_blood_request' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <!-- Include both hospital and hospital_name fields -->
+                
+                
+                <div class="mb-3">
+                    <label for="hospital_name" class="form-label">Hospital Name</label>
+                    <select class="form-select" id="hospital_name" name="hospital_name" required>
+                      <option value="" selected disabled>-- Select Hospital --</option>
+                      {% for hospital in hospitals %}
+                        <option value="{{ hospital.Hospital_Name }}">{{ hospital.Hospital_Name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                
+                <div class="mb-3">
+                  <label for="patient_name" class="form-label">Patient Name</label>
+                  <input type="text" class="form-control" id="patient_name" name="patient_name" required>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="contact_number" class="form-label">Contact Number</label>
+                  <input type="tel" class="form-control" id="contact_number" name="contact_number" required>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="blood_type" class="form-label">Blood Type Required</label>
+                  <select class="form-select" id="blood_type" name="blood_type" required>
+                    <option value="" selected disabled>-- Select Blood Type --</option>
+                    <option value="A+" {% if request.GET.blood_type == "A+" %}selected{% endif %}>A+</option>
+                    <option value="A-" {% if request.GET.blood_type == "A-" %}selected{% endif %}>A-</option>
+                    <option value="B+" {% if request.GET.blood_type == "B+" %}selected{% endif %}>B+</option>
+                    <option value="B-" {% if request.GET.blood_type == "B-" %}selected{% endif %}>B-</option>
+                    <option value="AB+" {% if request.GET.blood_type == "AB+" %}selected{% endif %}>AB+</option>
+                    <option value="AB-" {% if request.GET.blood_type == "AB-" %}selected{% endif %}>AB-</option>
+                    <option value="O+" {% if request.GET.blood_type == "O+" %}selected{% endif %}>O+</option>
+                    <option value="O-" {% if request.GET.blood_type == "O-" %}selected{% endif %}>O-</option>
+                  </select>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="units_needed" class="form-label">Units Needed</label>
+                  <input type="number" class="form-control" id="units_needed" name="units_needed" min="1" max="10" value="1" required>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="document" class="form-label">Supporting Document</label>
+                  <input type="file" class="form-control" id="document" name="document" required>
+                  <div class="form-text">Please upload a prescription or doctor's note (PDF or image).</div>
+                </div>
+                
+                <div class="d-grid gap-2">
+                  <button type="submit" class="btn btn-primary">Submit Request</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'blood_home' %}">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'search' %}">Search Blood</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'donate' %}">Donate Blood</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h4>Contact Us</h4>
+            <p>
+              A108 Adam Street <br>
+              New York, NY 535022<br>
+              United States <br><br>
+              <strong>Phone:</strong> +1 5589 55488 55<br>
+              <strong>Email:</strong> info@example.com<br>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Medicio</span></strong>. All Rights Reserved
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'hospitalhome/assets/vendor/purecounter/purecounter_vanilla.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/aos/aos.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/glightbox/js/glightbox.min.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/isotope-layout/isotope.pkgd.min.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/swiper/swiper-bundle.min.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/waypoints/noframework.waypoints.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/php-email-form/validate.js'%}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'hospitalhome/assets/js/main.js'%}"></script>
+
+</body>
+</html>

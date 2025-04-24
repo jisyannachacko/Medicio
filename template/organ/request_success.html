@@ -1,0 +1,169 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Medicio - Request Submitted</title> {# Updated Title #}
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <link href="{% static 'hospitalhome/assets/img/favicon.png'%}" rel="icon">
+    <link href="{% static 'hospitalhome/assets/img/apple-touch-icon.png'%}" rel="apple-touch-icon">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+
+    <link href="{% static 'hospitalhome/assets/vendor/animate.css/animate.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/aos/aos.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/bootstrap-icons/bootstrap-icons.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/boxicons/css/boxicons.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/glightbox/css/glightbox.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/swiper/swiper-bundle.min.css'%}" rel="stylesheet">
+
+    <link href="{% static 'hospitalhome/assets/css/style.css'%}" rel="stylesheet">
+
+    {# Removed original inline style block #}
+
+</head>
+
+<body>
+
+    {# Medicio header with dynamic navbar based on authentication status #}
+    <header id="header" class="fixed-top d-flex align-items-center">
+        <div class="container d-flex justify-content-between align-items-center">
+
+            <div class="logo">
+                {# Site title "Medicio" #}
+                <h1 class="text-light"><a href="/"><span>Medicio</span></a></h1> {# Link to home page #}
+            </div>
+
+            <nav id="navbar" class="navbar">
+                <ul>
+                    {# --- User Authenticated Navbar Functionality --- #}
+                    {# Assumes 'user_authenticated' and 'user_identifier' are passed from the view #}
+                    {# Replace 'user_authenticated' with your actual boolean variable name from the view context #}
+                    {% if user_authenticated %}
+                        {# Links for logged-in users #}
+                        {# Mark Dashboard as active, or adjust as needed based on flow #}
+                        <li><a class="nav-link active" href="{% url 'organ_dashboard' %}">Dashboard</a></li>
+                         <li><a class="nav-link" href="{% url 'kidney_liver_donor_register' %}">Become a Donor</a></li>
+                        <li><a class="nav-link" href="{% url 'organ_search' %}">Search Organs</a></li>
+                        <li><a class="nav-link" href="{% url 'submit_organ_request' %}">Submit Request</a></li>
+                         <li><a class="nav-link" href="{% url 'organ_logout' %}">Logout</a></li>
+
+                    {% else %}
+                        {# Links for logged-out users #}
+                        <li><a class="nav-link" href="/">Home</a></li> {# Link to main landing page #}
+                        <li><a class="nav-link" href="{% url 'organ_login' %}">Login</a></li>
+                        <li><a class="nav-link" href="{% url 'organ_signup' %}">Sign Up</a></li>
+                    {% endif %}
+                    {# --- End User Authenticated Navbar --- #}
+
+                     {# Add user identifier/name display if you passed it in context #}
+                     {% if user_identifier %}
+                         <li class="nav-link disabled text-white-50">Welcome, {{ user_identifier }}</li>
+                     {% endif %}
+
+
+                    {# Mobile navigation toggle #}
+                    {# <i class="bi bi-list mobile-nav-toggle"></i> #}
+                </ul>
+            </nav></div>
+    </header><main id="main" style="margin-top: 100px;"> {# Added margin-top to clear the fixed header #}
+        <section class="request-submitted-section py-5"> {# Custom class, added padding #}
+            <div class="container text-center"> {# Applied Bootstrap container and text-center #}
+                {# Content from your original HTML - placed inside the container #}
+
+                {# Applied Bootstrap heading and margin classes #}
+                <h1 class="mb-4">Request Submitted Successfully</h1> {# Applied Bootstrap margin #}
+
+                {# Styled success box with Bootstrap alert classes #}
+                <div class="alert alert-success p-4 mb-4" role="alert"> {# Applied Bootstrap alert, padding, margin #}
+                    {# Applied Bootstrap heading and margin classes #}
+                    <h2 class="alert-heading mb-3">Thank You!</h2> {# Applied Bootstrap alert heading, margin #}
+                    <p class="mb-0">Your organ request has been successfully submitted. The hospital will review your application and contact you soon.</p> {# mb-0 on last p #}
+                </div>
+
+                {# Standard paragraph #}
+                <p>If you have any questions, please contact the hospital directly.</p>
+
+                {# Styled button link with Bootstrap classes #}
+                <a href="{% url 'organ_dashboard' %}" class="btn btn-primary mt-4">Return to Dashboard</a> {# Applied Bootstrap button classes, margin-top #}
+
+                {# End of content from your original HTML #}
+            </div>
+        </section>
+    </main>{# Using the Medicio theme footer #}
+    <footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6 footer-info">
+                        <h3>Medicio</h3> {# Footer title #}
+                        <p>Connecting donors, patients, and hospitals for organ transplantation.</p>
+                        {# Add social links if desired #}
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Useful Links</h4>
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="/">Home</a></li>
+                             {# Adding dashboard links to footer #}
+                             <li><i class="bx bx-chevron-right"></i> <a href="{% url 'organ_dashboard' %}">Dashboard</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'kidney_liver_donor_register' %}">Become a Donor</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'organ_search' %}">Search Organs</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'submit_organ_request' %}">Submit Request</a></li>
+
+                            {# Add other relevant links #}
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li> {# Placeholder #}
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li> {# Placeholder #}
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li> {# Placeholder #}
+                        </ul>
+                    </div>
+
+                    {# Example Contact Info - Replace with your actual details #}
+                    <div class="col-lg-3 col-md-6 footer-contact">
+                        <h4>Contact Us</h4>
+                        <p>
+                            A108 Adam Street <br>
+                            New York, NY 535022<br>
+                            United States <br><br>
+                            <strong>Phone:</strong> +1 5589 55488 55<br>
+                            <strong>Email:</strong> info@example.com<br>
+                        </p>
+                    </div>
+
+                    {# Example more links or social media #}
+                    {# <div class="col-lg-3 col-md-6 footer-links"> ... </div> #}
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong><span>Medicio</span></strong>. All Rights Reserved
+            </div>
+            {# Optional: Add credits if required by the theme license #}
+            {# <div class="credits"> Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> </div> #}
+        </div>
+    </footer><a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <script src="{% static 'hospitalhome/assets/vendor/purecounter/purecounter_vanilla.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/aos/aos.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script> {# Bootstrap JS with Popper #}
+    <script src="{% static 'hospitalhome/assets/vendor/glightbox/js/glightbox.min.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/isotope-layout/isotope.pkgd.min.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/swiper/swiper-bundle.min.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/waypoints/noframework.waypoints.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/php-email-form/validate.js'%}"></script>
+
+    <script src="{% static 'hospitalhome/assets/js/main.js'%}"></script>
+
+</body>
+
+</html>

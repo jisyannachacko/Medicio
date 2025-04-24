@@ -1,0 +1,255 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Services - Moderna Bootstrap Template</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'hospitalhome/assets/img/favicon.png'%}" rel="icon">
+  <link href="{% static 'hospitalhome/assets/img/apple-touch-icon.png'%}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'hospitalhome/assets/vendor/animate.css/animate.min.css'%}" rel="stylesheet">
+  <link href="{% static 'hospitalhome/assets/vendor/aos/aos.css'%}" rel="stylesheet">
+  <link href="{% static 'hospitalhome/assets/vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+  <link href="{% static 'hospitalhome/assets/vendor/bootstrap-icons/bootstrap-icons.css'%}" rel="stylesheet">
+  <link href="{% static 'hospitalhome/assets/vendor/boxicons/css/boxicons.min.css'%}" rel="stylesheet">
+  <link href="{% static 'hospitalhome/assets/vendor/glightbox/css/glightbox.min.css'%}" rel="stylesheet">
+  <link href="{% static 'hospitalhome/assets/vendor/swiper/swiper-bundle.min.css'%}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'hospitalhome/assets/css/style.css'%}" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Moderna - v4.10.1
+  * Template URL: https://bootstrapmade.com/free-bootstrap-template-corporate-moderna/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center ">
+    <div class="container d-flex justify-content-between align-items-center">
+
+      <div class="logo">
+        <h1 class="text-light"><span>{{id}}</span></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="" href="#">Home</a></li>
+
+
+          <li><a class="active" href="{% url 'logout'%}">LogOut</a></li>
+
+
+
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <main id="main">
+
+    <!-- ======= Our Services Section ======= -->
+<!--    <section class="breadcrumbs">-->
+<!--      <div class="container">-->
+
+<!--        <div class="d-flex justify-content-between align-items-center">-->
+<!--          <h2>Our Services</h2>-->
+<!--          <ol>-->
+<!--            <li><a href="index.html">Home</a></li>-->
+<!--            <li>Our Services</li>-->
+<!--          </ol>-->
+<!--        </div>-->
+
+<!--      </div>-->
+<!--    </section>&lt;!&ndash; End Our Services Section &ndash;&gt;-->
+
+    <!-- ======= Services Section ======= -->
+     <!-- ======= Services Section ======= -->
+     <section class="services">
+      <div class="container">
+    
+        <div class="row css justify-content-center"> <div class="col-md-6 col-lg-4 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="0">
+            <div class="icon-box icon-box-pink">
+              <div class="icon">
+                <img src="{% static 'hospitalhome/assets/img/result.png' %}" width="48px" height="40px" alt="Blood Donors Icon">
+              </div>
+              <h4 class="title"><a href="{% url 'blood_details' %}">BLOOD DONORS</a></h4>
+              <p class="description">See details of Blood Donors</p>
+            </div>
+          </div>
+    
+          <div class="col-md-6 col-lg-4 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+            <div class="icon-box icon-box-cyan">
+              <div class="icon">
+                <img src="{% static 'hospitalhome/assets/img/blood.png' %}" width="48px" height="40px" alt="Blood Availability Icon">
+              </div>
+              <h4 class="title"><a href="{% url 'blood_inv' %}">BLOOD AVAILABILITY</a></h4>
+              <p class="description">Check and Update Blood Availability.</p>
+            </div>
+          </div>
+    
+          <div class="col-md-6 col-lg-4 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+            <div class="icon-box icon-box-cyan">
+              <div class="icon">
+                <img src="{% static 'hospitalhome/assets/img/bloodreq.jpeg' %}" width="60px" height="60px" alt="Blood Requests Icon">
+              </div>
+              <h4 class="title"><a href="{% url 'view_requests' %}">BLOOD REQUESTS</a></h4>
+              <p class="description">View blood donation requests</p>
+            </div>
+          </div>
+        </div> <div class="row css justify-content-center mt-4"> <div class="col-md-6 col-lg-4 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
+            <div class="icon-box icon-box-green">
+              <div class="icon">
+                <img src="{% static 'hospitalhome/assets/img/organ.png' %}" width="48px" height="40px" alt="Organ Donors Icon">
+              </div>
+              <h4 class="title"><a href="{% url 'hospital_view_organ_donors' %}">ORGAN DONORS</a></h4>
+              <p class="description">See details of Organ Donors</p>
+            </div>
+          </div>
+    
+          <div class="col-md-6 col-lg-4 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="400">
+            <div class="icon-box icon-box-blue">
+              <div class="icon">
+                <img src="{% static 'hospitalhome/assets/img/inventory.jpeg' %}" width="48px" height="40px" alt="Organ Inventory Icon">
+              </div>
+              <h4 class="title"><a href="{% url 'organ_inventory' %}">ORGAN INVENTORY</a></h4>
+              <p class="description">View available organ stock</p>
+            </div>
+          </div>
+    
+          <div class="col-md-6 col-lg-4 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="500">
+            <div class="icon-box icon-box-pink">
+              <div class="icon">
+                <img src="{% static 'hospitalhome/assets/img/request.png' %}" width="48px" height="40px" alt="Organ Requests Icon">
+              </div>
+              <h4 class="title"><a href="{% url 'hospital_view_organ_requests' %}">ORGAN REQUESTS</a></h4>
+              <p class="description">Manage organ transplant requests</p>
+            </div>
+          </div>
+        </div> </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+
+<!--    <div class="footer-newsletter">-->
+<!--      <div class="container">-->
+<!--        <div class="row">-->
+<!--          <div class="col-lg-6">-->
+<!--            <h4></h4>-->
+<!--            <p></p>-->
+<!--          </div>-->
+<!--          <div class="col-lg-6">-->
+<!--            <form action="" method="post">-->
+<!--              <input type="email" name="email"><input type="submit" value="Subscribe">-->
+<!--            </form>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
+
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+            <h4>Our Services</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">UPLOAD RESULT</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">BLOOD AVAILABILITY</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">ORGAN DONORS</a></li>
+
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h4>Contact Us</h4>
+            <p>
+              A108 Adam Street <br>
+              New York, NY 535022<br>
+              United States <br><br>
+              <strong>Phone:</strong> +1 5589 55488 55<br>
+              <strong>Email:</strong> info@example.com<br>
+            </p>
+
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-info">
+            <h3></h3>
+            <p></p>
+            <div class="social-links mt-3">
+              <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+              <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+              <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+              <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Medicio</span></strong>. All Rights Reserved
+      </div>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/free-bootstrap-template-corporate-moderna/ -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'hospitalhome/assets/vendor/purecounter/purecounter_vanilla.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/aos/aos.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/glightbox/js/glightbox.min.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/isotope-layout/isotope.pkgd.min.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/swiper/swiper-bundle.min.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/waypoints/noframework.waypoints.js'%}"></script>
+  <script src="{% static 'hospitalhome/assets/vendor/php-email-form/validate.js'%}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'hospitalhome/assets/js/main.js'%}"></script>
+
+</body>
+
+</html>

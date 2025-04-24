@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up </title>
+
+    <!-- Font Icon -->
+
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="{% static 'hospitalreg/css/style.css'%}">
+</head>
+<body>
+
+    <div class="main">
+
+        <div class="container">
+            <div class="signup-content">
+                <form method="POST" id="signup-form" class="signup-form">{% csrf_token %}
+                    <h2>Sign up </h2>
+                    <p class="desc"> <span></span></p>
+                    <div class="form-group">
+                        <input type="text" class="form-input" name="hospname"  placeholder="Hospital Name"/>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-input" name="address"  placeholder="Address"/>
+                    </div>
+                    <div class="form-group">
+                       <label class="label">District</label>
+                         <select data-trigger="" name="district">
+                    <option placeholder="" >Select</option>
+                    <option  value="Kasaragod">Kasaragod</option>
+                    <option value="Kannur">Kannur</option>
+                    <option value="Wayanad">Wayanad</option>
+                      <option value="Kozhikode">Kozhikode</option>
+                      <option value="Malappuram">Malappuram</option>
+                      <option value="Palakkad">Palakkad</option>
+                      <option value="Thrissur">Thrissur</option>
+                           <option value="Ernakulam">Ernakulam</option>
+                           <option value="Idukki">Idukki</option>
+                           <option value="Kottayam">Kottayam</option>
+                           <option value="Alappuzha">Alappuzha</option>
+                           <option value="Pathanamthitta">Pathanamthitta</option>
+                           <option value="Kollam">Kollam</option>
+                           <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+                  </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-input" name="pin"  placeholder="Pincode"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-input" name="phone" id=" placeholder="Phone"/>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="email" class="form-input" name="email"  placeholder="Email"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-input" name="password" id="password" placeholder="Password"/>
+                        <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-input" name="password" id="password" placeholder="Confirm Password"/>
+                        <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                        <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" name="submit" id="submit" class="form-submit submit" value="Sign up" />
+
+                        <div> IF you have an account <a href ="{% url 'hosp_login' %}">Login</a></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- JS -->
+    <script src="{% static 'hospitalreg/vendor/jquery/jquery.min.js'%}"></script>
+    <script src="{% static 'hospitalreg/js/main.js'%}"></script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

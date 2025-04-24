@@ -1,0 +1,353 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Medicio - Blood Availability</title> {# Updated Title #}
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <link href="{% static 'hospitalhome/assets/img/favicon.png'%}" rel="icon">
+    <link href="{% static 'hospitalhome/assets/img/apple-touch-icon.png'%}" rel="apple-touch-icon">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+
+    <link href="{% static 'hospitalhome/assets/vendor/animate.css/animate.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/aos/aos.css'%}" rel="stylesheet">
+    {# Using Bootstrap 5 #}
+    <link href="{% static 'hospitalhome/assets/vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/bootstrap-icons/bootstrap-icons.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/boxicons/css/boxicons.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/glightbox/css/glightbox.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/swiper/swiper-bundle.min.css'%}" rel="stylesheet">
+
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+
+    <link href="{% static 'hospitalhome/assets/css/style.css'%}" rel="stylesheet">
+
+    {# Removed original Tailwind links and styles #}
+
+    {# --- Custom Styles to Replicate Tailwind Look for Specific Elements --- #}
+    <style>
+        /* Style for the gradient header bar within the main content */
+        .blood-availability-header {
+            background: linear-gradient(to right, #1E3A8A, #4B5563); /* Replicating Tailwind gradient colors */
+            color: #ffffff; /* White text */
+            padding: 1.5rem; /* Adjust padding */
+            border-top-left-radius: 0.75rem; /* Replicating Tailwind rounded-tl-3xl */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Replicating Tailwind shadow */
+            margin-bottom: 1.5rem; /* Add margin below header */
+        }
+
+        .blood-availability-header h1 {
+            font-weight: bold; /* Replicating font-bold */
+            padding-left: 0.5rem; /* Replicating pl-2 */
+            font-size: 1.5rem; /* Replicating text-2xl */
+             margin-bottom: 0; /* Remove default h1 margin */
+        }
+
+        /* Style for the individual blood metric cards */
+        .blood-metric-card {
+            background-color: #ffffff; /* White background */
+            border-radius: 0.5rem; /* Replicating rounded-lg */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Replicating Tailwind shadow-xl */
+            padding: 1.25rem; /* Replicating p-5 */
+        }
+
+         /* Style for the icon area within the card */
+         .blood-metric-card .icon-area {
+            flex-shrink: 0; /* Prevent shrinking */
+            padding-right: 1rem; /* Replicating pr-4 */
+         }
+
+         /* Style for the text area within the card */
+         .blood-metric-card .text-area {
+            flex-grow: 1; /* Allow text area to grow */
+            text-align: right; /* Right align text */
+         }
+
+        /* Style for the blood type label */
+        .blood-metric-card .blood-type-label {
+            font-weight: bold; /* Bold font */
+            text-transform: uppercase; /* Uppercase text */
+            color: #4B5563; /* Replicating gray-600 text color */
+            margin-bottom: 0.25rem; /* Replicating mb-1 */
+            font-size: 0.875rem; /* Equivalent to text-sm or base, adjust if needed */
+        }
+
+        /* Style for the blood count */
+        .blood-metric-card .blood-count {
+            font-weight: bold; /* Bold font */
+            font-size: 1.875rem; /* Replicating text-3xl */
+            color: #1F2937; /* Replicating gray-800 text color */
+             margin-bottom: 0; /* Remove default paragraph margin */
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    {# Using the Bootstrap Medicio header structure #}
+    <header id="header" class="fixed-top d-flex align-items-center">
+        <div class="container d-flex justify-content-between align-items-center">
+
+            <div class="logo">
+                <h1 class="text-light"><a href="{% url 'hosp_serv' %}"><span>Medicio</span></a></h1> {# Link to Hospital Dashboard #}
+            </div>
+
+            <nav id="navbar" class="navbar">
+                <ul>
+                     {# Hospital Dashboard Navigation Links #}
+                    <li><a class="nav-link" href="{% url 'hosp_serv' %}">Dashboard</a></li>
+                     <li><a class="nav-link" href="{% url 'hospital_view_organ_donors' %}">Organ Donors</a></li>
+                    <li><a class="nav-link" href="{% url 'hospital_view_organ_requests' %}">Organ Requests</a></li>
+                    <li><a class="nav-link" href="{% url 'organ_inventory' %}">Organ Inventory</a></li>
+                     {# Mark Blood Availability/Inventory as active #}
+                     {# Assuming blood_inv is the URL name for this Blood Availability page #}
+                     <li><a class="nav-link active" href="{% url 'blood_inv' %}">Blood Availability</a></li> {# Label matches image #}
+                     <li><a class="nav-link" href="{% url 'view_requests' %}">Blood Requests</a></li> {# Example Blood Requests URL #}
+
+
+                    <li><a class="nav-link" href="{% url 'logout' %}">Logout</a></li> {# Logout link #}
+
+                     {# Display Hospital Name/Identifier if available in session #}
+                     {% if request.session.id %}
+                         <li class="nav-link disabled text-white-50 ms-3">Hospital: {{ request.session.id }}</li> {# Added ms-3 for margin #}
+                     {% endif %}
+
+                    {# Mobile navigation toggle (part of Medicio theme JS) #}
+                    {# <i class="bi bi-list mobile-nav-toggle"></i> #}
+                </ul>
+            </nav></div>
+    </header><main id="main" style="margin-top: 100px;"> {# Added margin-top to clear the fixed header #}
+        <section class="blood-dashboard-section py-5"> {# Custom class, added padding #}
+            <div class="container"> {# Applied Bootstrap container #}
+
+                 {# Replicated the gradient header section styling #}
+                 <div class="blood-availability-header">
+                     <h1>Blood Availability</h1>
+                 </div>
+
+                 {# Applied Bootstrap row for grid layout #}
+                <div class="row"> {# Applied Bootstrap row #}
+
+                    {# Metric Card Example (A+) - Using custom classes for styling #}
+                     {# Applied Bootstrap column classes for grid layout #}
+                    <div class="col-md-6 col-lg-4 mb-4"> {# Applied Bootstrap column and margin #}
+                         {# Applied custom blood-metric-card class #}
+                        <div class="blood-metric-card">
+                            {# Applied Bootstrap flex layout and align items #}
+                            <div class="d-flex align-items-center">
+                                 {# Applied custom icon-area class #}
+                                <div class="icon-area">
+                                     {# Font Awesome blood drop icon - Styled #}
+                                     {# The color text-danger is a Bootstrap class #}
+                                    <i class="fas fa-tint fa-3x text-danger"></i> {# Font Awesome blood drop, size, color #}
+                                </div>
+                                 {# Applied custom text-area class #}
+                                <div class="text-area">
+                                     {# Applied custom blood-type-label class #}
+                                    <h5 class="blood-type-label mb-1">{{'A+'}}</h5> {# Blood type label #}
+                                     {# Applied custom blood-count class #}
+                                    <p class="blood-count">{{Ap}}</p> {# Count #}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Metric Card Example (A-) #}
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="blood-metric-card">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-area">
+                                    <i class="fas fa-tint fa-3x text-danger"></i>
+                                </div>
+                                <div class="text-area">
+                                    <h5 class="blood-type-label mb-1">{{'A-'}}</h5>
+                                    <p class="blood-count">{{An}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Metric Card Example (B+) #}
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="blood-metric-card">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-area">
+                                    <i class="fas fa-tint fa-3x text-danger"></i>
+                                </div>
+                                <div class="text-area">
+                                    <h5 class="blood-type-label mb-1">{{'B+'}}</h5>
+                                    <p class="blood-count">{{Bp}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                     {# Metric Card Example (B-) #}
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="blood-metric-card">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-area">
+                                    <i class="fas fa-tint fa-3x text-danger"></i>
+                                </div>
+                                <div class="text-area">
+                                    <h5 class="blood-type-label mb-1">{{'B-'}}</h5>
+                                    <p class="blood-count">{{Bn}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Metric Card Example (AB+) #}
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="blood-metric-card">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-area">
+                                    <i class="fas fa-tint fa-3x text-danger"></i>
+                                </div>
+                                <div class="text-area">
+                                    <h5 class="blood-type-label mb-1">{{'AB+'}}</h5>
+                                    <p class="blood-count">{{ABp}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Metric Card Example (AB-) #}
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="blood-metric-card">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-area">
+                                    <i class="fas fa-tint fa-3x text-danger"></i>
+                                </div>
+                                <div class="text-area">
+                                    <h5 class="blood-type-label mb-1">{{'AB-'}}</h5>
+                                    <p class="blood-count">{{ABn}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Metric Card Example (O+) #}
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="blood-metric-card">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-area">
+                                    <i class="fas fa-tint fa-3x text-danger"></i>
+                                </div>
+                                <div class="text-area">
+                                    <h5 class="blood-type-label mb-1">{{'O+'}}</h5>
+                                    <p class="blood-count">{{Op}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Metric Card Example (O-) #}
+                     <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="blood-metric-card">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-area">
+                                    <i class="fas fa-tint fa-3x text-danger"></i>
+                                </div>
+                                <div class="text-area">
+                                    <h5 class="blood-type-label mb-1">{{'O-'}}</h5>
+                                    <p class="blood-count">{{On}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                {# Commented out sections for graphs/tables are kept commented out #}
+                </div>
+        </section>
+    </main>{# Using the Bootstrap Medicio theme footer #}
+    <footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6 footer-info">
+                        <h3>Medicio</h3> {# Footer title #}
+                        <p>Hospital Dashboard Footer Info.</p> {# Example footer text #}
+                         {# Add links or info relevant to the hospital dashboard #}
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Dashboard Links</h4>
+                         <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'hosp_serv' %}">Dashboard</a></li>
+                             <li><i class="bx bx-chevron-right"></i> <a href="{% url 'hospital_view_organ_donors' %}">Organ Donors</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'hospital_view_organ_requests' %}">Organ Requests</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'organ_inventory' %}">Organ Inventory</a></li>
+                             <li><i class="bx bx-chevron-right"></i> <a href="{% url 'blood_inv' %}">Blood Inventory</a></li>
+                             <li><i class="bx bx-chevron-right"></i> <a href="{% url 'view_requests' %}">Blood Requests</a></li>
+                        </ul>
+                    </div>
+
+                    {# Example Contact Info - Replace with your actual details #}
+                    <div class="col-lg-3 col-md-6 footer-contact">
+                        <h4>Hospital Contact</h4> {# Example title #}
+                        <p>
+                            Hospital Address Line 1 <br>
+                            Hospital Address Line 2<br>
+                            City, State, ZIP<br><br>
+                            <strong>Phone:</strong> +1 123 456 7890<br> {# Example Phone #}
+                            <strong>Email:</strong> hospital@example.com<br> {# Example Email #}
+                        </p>
+                    </div>
+
+                     {# Optional: Another column for links or social media #}
+                     {# <div class="col-lg-3 col-md-6 footer-links"> ... </div> #}
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong><span>Medicio</span></strong>. All Rights Reserved
+            </div>
+             {# Optional: Add credits if required by the theme license #}
+            {# <div class="credits"> Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> </div> #}
+        </div>
+    </footer><a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <script src="{% static 'hospitalhome/assets/vendor/purecounter/purecounter_vanilla.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/aos/aos.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script> {# Bootstrap JS with Popper #}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script> {# Chart.js library #}
+    <script src="{% static 'hospitalhome/assets/vendor/glightbox/js/glightbox.min.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/isotope-layout/isotope.pkgd.min.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/swiper/swiper-bundle.min.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/waypoints/noframework.waypoints.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/php-email-form/validate.js'%}"></script>
+
+    <script src="{% static 'hospitalhome/assets/js/main.js'%}"></script>
+
+    {# Chart.js scripts from the original template are included above #}
+     <script>
+         // Keep your original Chart.js script tags here if you uncomment the chart sections
+         // Example (uncomment and adapt if you use the charts):
+         /*
+        new Chart(document.getElementById("chartjs-7"), { ... });
+        new Chart(document.getElementById("chartjs-0"), { ... });
+        new Chart(document.getElementById("chartjs-4"), { ... });
+         */
+     </script>
+
+
+</body>
+
+</html>

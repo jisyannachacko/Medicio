@@ -1,0 +1,258 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Medicio - Organ Request</title> {# Updated Title #}
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <link href="{% static 'hospitalhome/assets/img/favicon.png'%}" rel="icon">
+    <link href="{% static 'hospitalhome/assets/img/apple-touch-icon.png'%}" rel="apple-touch-icon">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+
+    <link href="{% static 'hospitalhome/assets/vendor/animate.css/animate.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/aos/aos.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/bootstrap/css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/bootstrap-icons/bootstrap-icons.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/boxicons/css/boxicons.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/glightbox/css/glightbox.min.css'%}" rel="stylesheet">
+    <link href="{% static 'hospitalhome/assets/vendor/swiper/swiper-bundle.min.css'%}" rel="stylesheet">
+
+    <link href="{% static 'hospitalhome/assets/css/style.css'%}" rel="stylesheet">
+
+    {# Removed original inline style block #}
+
+</head>
+
+<body>
+
+    {# Medicio header with dynamic navbar based on authentication status #}
+    <header id="header" class="fixed-top d-flex align-items-center">
+        <div class="container d-flex justify-content-between align-items-center">
+
+            <div class="logo">
+                {# Site title "Medicio" #}
+                <h1 class="text-light"><a href="/"><span>Medicio</span></a></h1> {# Link to home page #}
+            </div>
+
+           <!-- In all HTML files -->
+<nav id="navbar" class="navbar">
+    <ul>
+        {% if user_authenticated %}
+            <!-- Authenticated Links -->
+            <li><a class="nav-link" href="{% url 'organ_dashboard' %}">Dashboard</a></li>
+            <li><a class="nav-link" href="{% url 'kidney_liver_donor_register' %}">Become a Donor</a></li>
+            <li><a class="nav-link" href="{% url 'organ_search' %}">Search Organs</a></li>
+            <li><a class="nav-link" href="{% url 'submit_organ_request' %}">Submit Request</a></li>
+            <li><a class="nav-link" href="{% url 'organ_logout' %}">Logout</a></li>
+        {% else %}
+            <!-- Guest Links -->
+            <li><a class="nav-link" href="/">Home</a></li>
+            <li><a class="nav-link" href="{% url 'organ_login' %}">Login</a></li>
+            <li><a class="nav-link" href="{% url 'organ_signup' %}">Sign Up</a></li>
+        {% endif %}
+    </ul>
+</nav></div>
+    </header><main id="main" style="margin-top: 100px;"> {# Added margin-top to clear the fixed header #}
+        <section class="organ-request-section py-5"> {# Custom class, added padding #}
+            <div class="container">
+                {# Content from your original HTML - placed inside the container #}
+
+                {# Applied Bootstrap heading and margin classes #}
+                <h1 class="mb-4 text-center">Submit Organ Request</h1> {# Centered heading #}
+
+                {# Styled note with Bootstrap alert classes #}
+                <div class="alert alert-info mb-4" role="alert"> {# Added mb-4 for spacing #}
+                    <p class="mb-0">Please fill out this form to submit a request for an organ transplant. Medical documents are required to process your request.</p> {# mb-0 on last p #}
+                </div>
+
+                 {# Styled messages with Bootstrap alerts #}
+                {% if messages %}
+                <div class="messages mb-4"> {# Added mb-4 for spacing #}
+                    {% for message in messages %}
+                        {# Apply Bootstrap alert classes based on message tags #}
+                        <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% elif message.tags == 'warning' %}alert-warning{% elif message.tags == 'info' %}alert-info{% else %}alert-secondary{% endif %} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            {# Optional: Add a close button for the alert #}
+                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+
+                <div class="row justify-content-center"> {# Centering the form column #}
+                    <div class="col-md-8 col-lg-6"> {# Set column width for medium and large screens #}
+                         <div class="p-4 p-md-5 bg-white shadow-md rounded"> {# Added padding, background, shadow, rounded corners #}
+
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+
+                                {# Applied Bootstrap form group and input classes #}
+                                <div class="mb-3"> {# Replaces original .form-group margin #}
+                                    <label for="patient_name" class="form-label">Patient Name</label>
+                                    <input type="text" id="patient_name" name="patient_name" class="form-control" required>
+                                </div>
+
+                                {# Applied Bootstrap form group and input classes #}
+                                <div class="mb-3"> {# Replaces original .form-group margin #}
+                                    <label for="contact_number" class="form-label">Contact Number</label>
+                                    <input type="tel" id="contact_number" name="contact_number" class="form-control" required>
+                                </div>
+
+                                {# Applied Bootstrap form group and input classes #}
+                                <div class="mb-3"> {# Replaces original .form-group margin #}
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" id="email" name="email" class="form-control" required>
+                                </div>
+
+                                {# Applied Bootstrap form group and select classes #}
+                                <div class="mb-3"> {# Replaces original .form-group margin #}
+                                    <label for="blood_type" class="form-label">Blood Type</label>
+                                    <select id="blood_type" name="blood_type" class="form-select" required> {# Applied .form-select #}
+                                        <option value="">Select Blood Type</option>
+                                        <option value="A+">A+</option>
+                                        <option value="A-">A-</option>
+                                        <option value="B+">B+</option>
+                                        <option value="B-">B-</option>
+                                        <option value="AB+">AB+</option>
+                                        <option value="AB-">AB-</option>
+                                        <option value="O+">O+</option>
+                                        <option value="O-">O-</option>
+                                    </select>
+                                </div>
+
+                                {# Applied Bootstrap form group and select classes #}
+                                {# Assuming 'organ_types' is passed in context from the view #}
+                                <div class="mb-3"> {# Replaces original .form-group margin #}
+                                    <label for="organ_needed" class="form-label">Organ Needed</label>
+                                    <select id="organ_needed" name="organ_needed" class="form-select" required> {# Applied .form-select #}
+                                        <option value="">Select Organ Type</option>
+                                        {% for organ in organ_types %}
+                                        <option value="{{ organ.id }}">{{ organ.Organ_Name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                {# Applied Bootstrap form group and select classes #}
+                                <div class="mb-3"> {# Replaces original .form-group margin #}
+                                    <label for="urgency_level" class="form-label">Urgency Level</label>
+                                    <select id="urgency_level" name="urgency_level" class="form-select" required> {# Applied .form-select #}
+                                        <option value="low">Low</option>
+                                        <option value="medium">Medium</option>
+                                        <option value="high">High</option>
+                                        <option value="critical">Critical</option>
+                                    </select>
+                                </div>
+
+                                {# Applied Bootstrap form group and select classes #}
+                                {# Assuming 'hospitals' is passed in context from the view #}
+                                <div class="mb-3"> {# Replaces original .form-group margin #}
+                                    <label for="hospital_name" class="form-label">Hospital</label>
+                                    <select id="hospital_name" name="hospital_name" class="form-select" required> {# Applied .form-select #}
+                                        <option value="">Select Hospital</option>
+                                        {% for hospital in hospitals %}
+                                        <option value="{{ hospital.Hospital_Name }}">{{ hospital.Hospital_Name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                {# Applied Bootstrap form group and file input classes #}
+                                <div class="mb-3"> {# Replaces original .form-group margin #}
+                                    <label for="medical_documents" class="form-label">Medical Documents</label>
+                                    <input type="file" id="medical_documents" name="medical_documents" class="form-control" required> {# Applied .form-control #}
+                                     {# Applied Bootstrap small text styling #}
+                                    <small class="form-text text-muted">Upload documents in PDF or image format</small>
+                                </div>
+
+                                {# Applied Bootstrap button and margin classes #}
+                                <div class="d-grid gap-2 mb-3"> {# d-grid for full-width button #}
+                                    <button type="submit" class="btn btn-primary btn-lg">Submit Request</button> {# Applied Bootstrap button classes, btn-lg for larger button #}
+                                </div>
+                            </form>
+
+                            {# Link back to Dashboard - Styled #}
+                            <p class="text-center mt-3"><a href="{% url 'organ_dashboard' %}">Back to Dashboard</a></p>
+
+                        </div> {# End p-4/p-md-5 div #}
+                    </div> {# End col-md-8/col-lg-6 div #}
+                </div> {# End row justify-content-center div #}
+                {# End of content from your original HTML #}
+            </div>
+        </section>
+    </main>{# Using the Medicio theme footer #}
+    <footer id="footer" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6 footer-info">
+                        <h3>Medicio</h3> {# Footer title #}
+                        <p>Connecting donors, patients, and hospitals for organ transplantation.</p>
+                        {# Add social links if desired #}
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 footer-links">
+                        <h4>Useful Links</h4>
+                        <ul>
+                            <li><i class="bx bx-chevron-right"></i> <a href="/">Home</a></li>
+                             {# Adding dashboard links to footer #}
+                            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'organ_dashboard' %}">Dashboard</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'kidney_liver_donor_register' %}">Become a Donor</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'organ_search' %}">Search Organs</a></li>
+                            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'submit_organ_request' %}">Submit Request</a></li>
+
+                            {# Add other relevant links #}
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li> {# Placeholder #}
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li> {# Placeholder #}
+                            <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li> {# Placeholder #}
+                        </ul>
+                    </div>
+
+                    {# Example Contact Info - Replace with your actual details #}
+                    <div class="col-lg-3 col-md-6 footer-contact">
+                        <h4>Contact Us</h4>
+                        <p>
+                            A108 Adam Street <br>
+                            New York, NY 535022<br>
+                            United States <br><br>
+                            <strong>Phone:</strong> +1 5589 55488 55<br>
+                            <strong>Email:</strong> info@example.com<br>
+                        </p>
+                    </div>
+
+                    {# Example more links or social media #}
+                    {# <div class="col-lg-3 col-md-6 footer-links"> ... </div> #}
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong><span>Medicio</span></strong>. All Rights Reserved
+            </div>
+            {# Optional: Add credits if required by the theme license #}
+            {# <div class="credits"> Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> </div> #}
+        </div>
+    </footer><a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <script src="{% static 'hospitalhome/assets/vendor/purecounter/purecounter_vanilla.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/aos/aos.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script> {# Bootstrap JS with Popper #}
+    <script src="{% static 'hospitalhome/assets/vendor/glightbox/js/glightbox.min.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/isotope-layout/isotope.pkgd.min.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/swiper/swiper-bundle.min.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/waypoints/noframework.waypoints.js'%}"></script>
+    <script src="{% static 'hospitalhome/assets/vendor/php-email-form/validate.js'%}"></script>
+
+    <script src="{% static 'hospitalhome/assets/js/main.js'%}"></script>
+
+</body>
+
+</html>

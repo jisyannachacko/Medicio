@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blood Search</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,700" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'bloodsearch/css/main.css' %}">
+  <link rel="stylesheet" href="{% static 'bloodsearch/fonts/icomoon/style.css' %}">
+  <link rel="stylesheet" href="{% static 'bloodsearch/css-table-14/css/owl.carousel.min.css' %}">
+  <link rel="stylesheet" href="{% static 'bloodsearch/css-table-14/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'bloodsearch/css-table-14/css/style.css' %}">
+</head>
+<body>
+
+<div class="s013">
+  <form method="get">
+    <fieldset>
+      <legend>Search</legend>
+    </fieldset>
+    <div class="inner-form">
+      <div class="left">
+        <div class="input-wrap first">
+          <div class="input-field first">
+            <label class="label">District</label>
+            <div class="rs-select2 js-select-simple select--no-search">
+              <select name="district">
+                <option value="">Select</option>
+                <option value="Kasaragod">Kasaragod</option>
+                <option value="Kannur">Kannur</option>
+                <option value="Wayanad">Wayanad</option>
+                <option value="Kozhikode">Kozhikode</option>
+                <option value="Malappuram">Malappuram</option>
+                <option value="Palakkad">Palakkad</option>
+                <option value="Thrissur">Thrissur</option>
+                <option value="Ernakulam">Ernakulam</option>
+                <option value="Idukki">Idukki</option>
+                <option value="Kottayam">Kottayam</option>
+                <option value="Alappuzha">Alappuzha</option>
+                <option value="Pathanamthitta">Pathanamthitta</option>
+                <option value="Kollam">Kollam</option>
+                <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+              </select>
+            </div>
+            
+          </div>
+        </div>
+        <div class="input-wrap second">
+          <div class="input-field second">
+            <label class="label">Blood Type</label>
+            <div class="rs-select2 js-select-simple select--no-search">
+              <select name="btype">
+                <option value="">Select</option>
+                <option value="A+">A+</option>
+                <option value="A-">A−</option>
+                <option value="B+">B+</option>
+                <option value="B-">B−</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB−</option>
+                <option value="O+">O+</option>
+                <option value="O-">O−</option>
+              </select>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <button class="btn-search" type="submit">SEARCH</button>
+    </div>
+  </form>
+</div>
+
+<div class="content tb-new">
+  <br>
+  <div class="container">
+    <div class="table-responsive custom-table-responsive">
+      <table class="table custom-table">
+        <thead>
+          <tr>
+            <th>Hospital Name</th>
+            <th>District</th>
+            <th>Blood Type</th>
+            <th>Count</th>
+            <th>Contact Number</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for x in donor %}
+          <tr>
+            <td>{{ x.Hospital_Name }}</td>
+            <td>{{ x.District }}</td>
+            <td>{{ x.Blood_Type }}</td>
+            <td>{{ leng }}</td>
+            <td>{{ data }}</td>
+            <td>
+              <a href="{% url 'submit_blood_request' %}?hospital={{ x.id }}&hospital_name={{ x.Hospital_Name|urlencode }}&blood_type={{ x.Blood_Type|urlencode }}" class="btn btn-sm btn-primary">Request</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="{% static 'bloodsearch/js/extention/choices.js' %}"></script>
+<script src="{% static 'bloodsearch/js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'bloodsearch/js/popper.min.js' %}"></script>
+<script src="{% static 'bloodsearch/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'bloodsearch/js/main.js' %}"></script>
+</body>
+</html>

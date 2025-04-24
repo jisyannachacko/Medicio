@@ -1,0 +1,685 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Blood Donation Results</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/css/bootstrap.min.css">
+  
+  <style>
+    :root {
+      --primary: #e74c3c;
+      --primary-light: #f9e4e2;
+      --secondary: #3498db;
+      --light: #f8f9fa;
+      --dark: #343a40;
+      --success: #28a745;
+      --warning: #ffc107;
+      --danger: #dc3545;
+      --gray: #6c757d;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f5f5;
+      padding-top: 80px;
+    }
+    
+    .navbar {
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .navbar-brand img {
+      height: 40px;
+    }
+    
+    .nav-link {
+      color: var(--dark);
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-link:hover {
+      color: var(--primary);
+    }
+    
+    .btn-donate {
+      background-color: var(--primary);
+      color: white;
+      border-radius: 30px;
+      padding: 8px 20px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-donate:hover {
+      background-color: #c0392b;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-search {
+      background-color: var(--secondary);
+      color: white;
+      border-radius: 30px;
+      padding: 8px 20px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-search:hover {
+      background-color: #2980b9;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .user-welcome {
+      font-weight: 600;
+      color: var(--dark);
+    }
+    
+    .content-section {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      margin-bottom: 30px;
+    }
+    
+    .section-title {
+      color: var(--dark);
+      font-weight: 600;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--primary);
+      display: inline-block;
+    }
+    
+    /* Enhanced Table Styles */
+    .blood-results-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .blood-results-table thead th {
+      background-color: var(--primary);
+      color: white;
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 13px;
+      padding: 18px 15px;
+      letter-spacing: 0.5px;
+      border: none;
+      vertical-align: middle;
+      position: relative;
+    }
+    
+    .blood-results-table thead th::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 25%;
+      height: 50%;
+      width: 1px;
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+    
+    .blood-results-table thead th:last-child::after {
+      display: none;
+    }
+    
+    .blood-results-table tbody tr {
+      transition: all 0.3s ease;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .blood-results-table tbody tr:hover {
+      background-color: var(--primary-light);
+    }
+    
+    .blood-results-table tbody tr:last-child {
+      border-bottom: none;
+    }
+    
+    .blood-results-table tbody td, 
+    .blood-results-table tbody th {
+      padding: 15px;
+      font-size: 14px;
+      vertical-align: middle;
+      color: var(--dark);
+      border-top: none;
+    }
+    
+    .blood-results-table tbody th {
+      font-weight: 600;
+    }
+    
+    .blood-results-table .blood-type {
+      display: inline-block;
+      font-weight: 600;
+      color: #fff;
+      background-color: var(--primary);
+      padding: 6px 12px;
+      border-radius: 20px;
+      text-align: center;
+      min-width: 50px;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+    }
+    
+    .blood-results-table .blood-type.ab-positive,
+    .blood-results-table .blood-type.ab-negative {
+      background-color: #9b59b6;
+    }
+    
+    .blood-results-table .blood-type.a-positive,
+    .blood-results-table .blood-type.a-negative {
+      background-color: #3498db;
+    }
+    
+    .blood-results-table .blood-type.b-positive,
+    .blood-results-table .blood-type.b-negative {
+      background-color: #2ecc71;
+    }
+    
+    .blood-results-table .blood-type.o-positive,
+    .blood-results-table .blood-type.o-negative {
+      background-color: #e67e22;
+    }
+    
+    /* Health info styling */
+    .health-info-cell {
+      color: var(--gray);
+    }
+    
+    .health-info-cell .health-label {
+      font-weight: 500;
+      color: var(--dark);
+      margin-right: 4px;
+    }
+    
+    .health-info-cell .positive {
+      color: var(--danger);
+    }
+    
+    .health-info-cell .negative {
+      color: var(--success);
+    }
+    
+    /* Status badges */
+    .status-pending {
+      background-color: var(--warning);
+      color: #000;
+      border-radius: 30px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-block;
+      min-width: 90px;
+      text-align: center;
+    }
+    
+    .status-approved {
+      background-color: var(--success);
+      color: white;
+      border-radius: 30px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-block;
+      min-width: 90px;
+      text-align: center;
+    }
+    
+    .status-rejected {
+      background-color: var(--danger);
+      color: white;
+      border-radius: 30px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-block;
+      min-width: 90px;
+      text-align: center;
+    }
+    
+    /* Compact view for medical info */
+    .medical-info-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    
+    .medical-info-item {
+      background-color: #f8f9fa;
+      border: 1px solid #e9ecef;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .medical-info-item i {
+      margin-right: 4px;
+      font-size: 11px;
+    }
+    
+    /* Date styling */
+    .donation-date {
+      background-color: #f5f5f5;
+      border-radius: 4px;
+      padding: 5px 10px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    
+    /* Responsive improvements */
+    @media (max-width: 992px) {
+      .btn-donate, .btn-search {
+        padding: 6px 12px;
+        font-size: 14px;
+      }
+      
+      .blood-results-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+    }
+    
+    /* Row alternating colors */
+    .blood-results-table tbody tr:nth-child(even) {
+      background-color: rgba(0,0,0,0.02);
+    }
+    
+    /* Column highlighting */
+    .blood-results-table .highlight-column {
+      background-color: rgba(231, 76, 60, 0.05);
+    }
+    
+    /* Add sorting indicators */
+    .sortable {
+      cursor: pointer;
+    }
+    
+    .sortable::after {
+      content: "\f0dc";
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      margin-left: 5px;
+      font-size: 12px;
+      opacity: 0.5;
+    }
+    
+    .footer {
+      background-color: var(--dark);
+      color: white;
+      padding: 30px 0;
+      margin-top: 50px;
+    }
+    
+    .footer h5 {
+      font-weight: 600;
+    }
+    
+    .footer-links {
+      list-style: none;
+      padding-left: 0;
+    }
+    
+    .footer-links li a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .footer-links li a:hover {
+      color: white;
+      padding-left: 5px;
+    }
+    
+    .social-icons a {
+      color: white;
+      margin-right: 15px;
+      font-size: 18px;
+      transition: all 0.3s ease;
+    }
+    
+    .social-icons a:hover {
+      color: var(--primary);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'medicio' %}">
+          <img src="{% static 'bloodhome/assets/img/logo.png' %}" alt="Blood Donation Logo">
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/bloodlogin">Home</a>
+            </li>
+          </ul>
+          
+          <div class="d-flex align-items-center">
+            <a href="{% url 'donate' %}" class="btn btn-donate mr-2">Donate Blood</a>
+            <a href="{% url 'search' %}" class="btn btn-search mr-2">Find Blood</a>
+            <a href="{% url 'viewresult' %}" class="btn btn-donate mr-3 active">Results</a>
+            
+            <div class="d-flex align-items-center ml-3">
+              <span class="user-welcome mr-3">Hello, {{id}}</span>
+              <a href="{% url 'logout' %}" class="btn btn-outline-dark btn-sm">
+                <i class="fas fa-sign-out-alt mr-1"></i> Logout
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <section class="container py-5">
+    <div class="content-section">
+      <h2 class="section-title">Blood Donation Results</h2>
+      
+      <!-- Search and Filter Bar -->
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search by name, blood type..." id="tableSearch">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <select class="form-control" id="bloodTypeFilter">
+            <option value="">All Blood Types</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <select class="form-control" id="statusFilter">
+            <option value="">All Statuses</option>
+            <option value="Approved">Approved</option>
+            <option value="Pending">Pending</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="table-responsive">
+        <table class="table blood-results-table">
+          <thead>
+            <tr>
+              <th class="sortable">Name</th>
+              <th class="sortable">Age</th>
+              <th class="sortable">Blood Type</th>
+              <th>Date of Birth</th>
+              <th>Gender</th>
+              <th>District</th>
+              <th>Weight</th>
+              <th>Health Info</th>
+              <th>Donation Date</th>
+              <th class="sortable">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for x in result %}
+              <tr>
+                <th scope="row">{{x.First_Name}}</th>
+                <td>{{x.Age}}</td>
+                <td>
+                  {% if x.Blood_Type == 'A+' %}
+                    <span class="blood-type a-positive">{{x.Blood_Type}}</span>
+                  {% elif x.Blood_Type == 'A-' %}
+                    <span class="blood-type a-negative">{{x.Blood_Type}}</span>
+                  {% elif x.Blood_Type == 'B+' %}
+                    <span class="blood-type b-positive">{{x.Blood_Type}}</span>
+                  {% elif x.Blood_Type == 'B-' %}
+                    <span class="blood-type b-negative">{{x.Blood_Type}}</span>
+                  {% elif x.Blood_Type == 'AB+' %}
+                    <span class="blood-type ab-positive">{{x.Blood_Type}}</span>
+                  {% elif x.Blood_Type == 'AB-' %}
+                    <span class="blood-type ab-negative">{{x.Blood_Type}}</span>
+                  {% elif x.Blood_Type == 'O+' %}
+                    <span class="blood-type o-positive">{{x.Blood_Type}}</span>
+                  {% elif x.Blood_Type == 'O-' %}
+                    <span class="blood-type o-negative">{{x.Blood_Type}}</span>
+                  {% else %}
+                    <span class="blood-type">{{x.Blood_Type}}</span>
+                  {% endif %}
+                </td>
+                <td>{{x.Date_Of_Birth}}</td>
+                <td>{{x.Gender}}</td>
+                <td>{{x.District}}</td>
+                <td><strong>{{x.Weight}}</strong> kg</td>
+                <td>
+                  <div class="medical-info-group">
+                    <div class="medical-info-item">
+                      <i class="fas fa-heartbeat"></i> Diabetic: 
+                      {% if x.Diabetic == 'Yes' %}
+                        <span class="text-danger ml-1">Yes</span>
+                      {% else %}
+                        <span class="text-success ml-1">No</span>
+                      {% endif %}
+                    </div>
+                    <div class="medical-info-item">
+                      <i class="fas fa-virus"></i> HIV: 
+                      {% if x.HIV == 'Yes' %}
+                        <span class="text-danger ml-1">Yes</span>
+                      {% else %}
+                        <span class="text-success ml-1">No</span>
+                      {% endif %}
+                    </div>
+                    {% if x.Medicine_Name %}
+                      <div class="medical-info-item">
+                        <i class="fas fa-pills"></i> Med: <span class="ml-1">{{x.Medicine_Name}}</span>
+                      </div>
+                    {% endif %}
+                    {% if x.Disease_Name %}
+                      <div class="medical-info-item">
+                        <i class="fas fa-notes-medical"></i> Disease: <span class="ml-1">{{x.Disease_Name}}</span>
+                      </div>
+                    {% endif %}
+                  </div>
+                </td>
+                <td><span class="donation-date">{{x.Donated_Date}}</span></td>
+                <td>
+                  {% if x.status == 'Approved' %}
+                    <span class="status-approved"><i class="fas fa-check-circle mr-1"></i> {{x.status}}</span>
+                  {% elif x.status == 'Rejected' %}
+                    <span class="status-rejected"><i class="fas fa-times-circle mr-1"></i> {{x.status}}</span>
+                  {% else %}
+                    <span class="status-pending"><i class="fas fa-clock mr-1"></i> {{x.status}}</span>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Pagination -->
+      <div class="d-flex justify-content-between align-items-center mt-4">
+        <div class="text-muted">
+          Showing <span class="font-weight-bold">1-10</span> of <span class="font-weight-bold">20</span> results
+        </div>
+        <nav aria-label="Page navigation">
+          <ul class="pagination">
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+            </li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+          <h5 class="mb-4">About Blood Donation</h5>
+          <p class="text-muted">Our mission is to help people find blood donors and save lives across the country. Every donation can help save up to three lives.</p>
+          <div class="social-icons mt-4">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        
+        <div class="col-lg-2 col-md-6 mb-4 mb-md-0">
+          <h5 class="mb-4">Quick Links</h5>
+          <ul class="footer-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Donate</a></li>
+            <li><a href="#">Find Blood</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+          <h5 class="mb-4">Resources</h5>
+          <ul class="footer-links">
+            <li><a href="#">Donation Process</a></li>
+            <li><a href="#">Eligibility Requirements</a></li>
+            <li><a href="#">Blood Types</a></li>
+            <li><a href="#">Health Benefits</a></li>
+            <li><a href="#">FAQ</a></li>
+          </ul>
+        </div>
+        
+        <div class="col-lg-3 col-md-6">
+          <h5 class="mb-4">Contact Info</h5>
+          <p><i class="fas fa-map-marker-alt mr-2"></i> 123 Blood Bank Street, City</p>
+          <p><i class="fas fa-phone-alt mr-2"></i> +1 (555) 123-4567</p>
+          <p><i class="fas fa-envelope mr-2"></i> contact@blooddonation.org</p>
+        </div>
+      </div>
+      
+      <div class="row mt-4">
+        <div class="col-12 text-center">
+          <p class="mb-0">&copy; 2025 Blood Donation System. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/js/bootstrap.min.js"></script>
+  
+  <script>
+    $(function () {
+      // Initialize tooltips
+      $('[data-toggle="tooltip"]').tooltip();
+      
+      // Table search functionality
+      $("#tableSearch").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $(".blood-results-table tbody tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+      
+      // Blood type filter
+      $("#bloodTypeFilter").on("change", function() {
+        var value = $(this).val();
+        if (value === "") {
+          $(".blood-results-table tbody tr").show();
+        } else {
+          $(".blood-results-table tbody tr").hide();
+          $(".blood-results-table tbody tr").filter(function() {
+            return $(this).find(".blood-type").text() === value;
+          }).show();
+        }
+      });
+      
+      // Status filter
+      $("#statusFilter").on("change", function() {
+        var value = $(this).val();
+        if (value === "") {
+          $(".blood-results-table tbody tr").show();
+        } else {
+          $(".blood-results-table tbody tr").hide();
+          $(".blood-results-table tbody tr").filter(function() {
+            return $(this).find(".status-approved, .status-rejected, .status-pending").text().indexOf(value) > -1;
+          }).show();
+        }
+      });
+      
+      // Sort functionality
+      $(".sortable").on("click", function() {
+        var table = $(this).parents("table").eq(0);
+        var rows = table.find("tr:gt(0)").toArray().sort(comparer($(this).index()));
+        this.asc = !this.asc;
+        if (!this.asc) {
+          rows = rows.reverse();
+        }
+        for (var i = 0; i < rows.length; i++) {
+          table.append(rows[i]);
+        }
+      });
+      
+      function comparer(index) {
+        return function(a, b) {
+          var valA = getCellValue(a, index);
+          var valB = getCellValue(b, index);
+          return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB);
+        };
+      }
+      
+      function getCellValue(row, index) {
+        return $(row).children("td").eq(index).text();
+      }
+    });
+  </script>
+</body>
+</html>
